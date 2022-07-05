@@ -1,0 +1,11 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
+$font: "Montserrat", sans-serif;
+$body-font-family: "Montserrat", sans-serif;
+$fat: #e8e9a1;
+$sugar: #ff9a00;
+$carbo: #ff165d;
