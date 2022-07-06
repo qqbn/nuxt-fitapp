@@ -1,69 +1,37 @@
 <template>
-    <v-container
-        fluid
-        fill-height
-        class="d-flex justify-center align-start standings-main ma-0 pa-0"
-    >
-        <div
-            class="
+    <v-container fluid fill-height class="d-flex justify-center align-start standings-main ma-0 pa-0">
+        <div class="
                 standings-header
                 d-flex
                 justify-space-around
                 align-center
                 flex-column
                 py-6
-            "
-        >
-            <div
-                class="
+            ">
+            <div class="
                     mb-4
                     date-picker
                     d-flex
                     justify-space-between
                     align-center
                     pa-4
-                "
-            >
+                ">
                 <v-btn fab small color="primary" class="mr-4">
                     <v-icon> mdi-arrow-left-drop-circle </v-icon>
                 </v-btn>
-                <v-menu
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
+                <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+                    offset-y min-width="auto">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            color="primary"
-                            fab
-                            v-bind="attrs"
-                            v-on="on"
-                            class="text-h6"
-                            >{{ date.slice(-2) }}</v-btn
-                        >
+                        <v-btn color="primary" fab v-bind="attrs" v-on="on" class="text-h6">{{ date.slice(-2) }}</v-btn>
                     </template>
-                    <v-date-picker
-                        v-model="date"
-                        @input="menu2 = false"
-                    ></v-date-picker>
+                    <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
                 </v-menu>
                 <v-btn fab small color="primary" class="ml-4">
                     <v-icon> mdi-arrow-right-drop-circle </v-icon>
                 </v-btn>
             </div>
-            <v-card
-                class="progress d-flex justify-center align-center flex-column"
-            >
-                <v-progress-circular
-                    :rotate="360"
-                    :size="150"
-                    :width="15"
-                    :value="value"
-                    color="primary"
-                >
+            <v-card class="progress d-flex justify-center align-center flex-column">
+                <v-progress-circular :rotate="360" :size="150" :width="15" :value="value" color="primary">
                     {{ value }}
                 </v-progress-circular>
             </v-card>
@@ -81,21 +49,14 @@
                         <v-card-title class="text-body-1 ma-0">
                             Ingredient name
                             <v-spacer></v-spacer>
-                            <v-icon
-                                color="primary"
-                                class="test ma-2 mt-4"
-                                @click="testFunc()"
-                                >mdi-delete</v-icon
-                            >
+                            <v-icon color="primary" class="test ma-2 mt-4" @click="testFunc()">mdi-delete</v-icon>
                         </v-card-title>
-                        <v-card-text
-                            class="
+                        <v-card-text class="
                                 d-flex
                                 justify-space-around
                                 align-center
                                 ma-0
-                            "
-                        >
+                            ">
                             <p class="font-weight-bold">
                                 30 <span class="primary--text">KCAL</span>
                             </p>
@@ -123,47 +84,23 @@
             <div class="small-progress">
                 <p class="macro-name">Fat</p>
                 <p>20/80g</p>
-                <v-progress-linear
-                    color="#e8e9a1"
-                    height="10"
-                    value="10"
-                    width="25"
-                    striped
-                ></v-progress-linear>
+                <v-progress-linear color="#e8e9a1" height="10" value="10" width="25" striped></v-progress-linear>
             </div>
             <div class="small-progress">
                 <p class="macro-name">Sugar</p>
                 <p>20/80g</p>
-                <v-progress-linear
-                    color="#ff9a00"
-                    height="10"
-                    value="10"
-                    width="25"
-                    striped
-                ></v-progress-linear>
+                <v-progress-linear color="#ff9a00" height="10" value="10" width="25" striped></v-progress-linear>
             </div>
             <div class="small-progress">
                 <p class="macro-name">Carbs</p>
                 <p>20/80g</p>
-                <v-progress-linear
-                    color="#ff165d"
-                    height="10"
-                    value="10"
-                    width="25"
-                    striped
-                ></v-progress-linear>
+                <v-progress-linear color="#ff165d" height="10" value="10" width="25" striped></v-progress-linear>
             </div>
 
             <div class="small-progress">
                 <p class="macro-name">Protein</p>
                 <p>20/80g</p>
-                <v-progress-linear
-                    color="light-blue"
-                    height="10"
-                    value="10"
-                    width="25"
-                    striped
-                ></v-progress-linear>
+                <v-progress-linear color="light-blue" height="10" value="10" width="25" striped></v-progress-linear>
             </div>
         </div>
     </v-container>
@@ -210,6 +147,7 @@ export default {
 .table {
     width: 90%;
 }
+
 .test {
     cursor: pointer;
 }
@@ -217,24 +155,28 @@ export default {
 .standings-main {
     background-color: white !important;
 }
-.standings-header {
-}
+
+.standings-header {}
+
 .progress {
     border-radius: 50% !important;
     min-height: 200px;
     min-width: 200px;
 }
+
 .text {
     font-size: 24px;
     width: 100%;
     text-align: center;
 }
+
 .footer {
     width: 100%;
     height: 150px;
     top: 100%;
     position: sticky;
 }
+
 .small-progress {
     height: 100%;
     width: 20%;
@@ -243,6 +185,7 @@ export default {
     align-items: center;
     flex-direction: column;
 }
+
 .macro-name {
     color: #26a69a;
 }

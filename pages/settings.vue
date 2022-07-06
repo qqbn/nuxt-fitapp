@@ -1,23 +1,17 @@
 <template>
-    <v-container
-        fluid
-        fill-height
-        class="settings-main ma-0 d-flex justify-center align-start"
-    >
+    <v-container fluid fill-height class="settings-main ma-0 d-flex justify-center align-start">
         <v-col cols="12" xl="6" lg="6" md="6" sm="10" xs="12" class="py-12">
             <v-card class="card">
                 <v-card-title class="headline">
                     Right here, you can set your daily goals!
                 </v-card-title>
-                <v-card-text
-                    class="
+                <v-card-text class="
                         content
                         d-flex
                         justify-space-around
                         align-center
                         flex-column
-                    "
-                >
+                    ">
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Calories</h4>
                         <v-text-field solo type="number"></v-text-field>
@@ -57,6 +51,7 @@ export default {};
 h4 {
     color: #26a69a;
 }
+
 .card {
     /* background-color: transparent !important;  do przemyslenia*/
 }

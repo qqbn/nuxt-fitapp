@@ -1,36 +1,22 @@
 <template>
     <v-container fluid fill-height class="bck ma-0">
-        <v-row
-            class="d-flex justify-center flex-column align-center my-12 px-4"
-        >
+        <v-row class="d-flex justify-center flex-column align-center my-12 px-4">
             <v-col cols="12" class="text-center">
                 <h3 class="mt-10 mb-4 header">
                     Just type the name of dish. We will try to find its
                     macronutrients
                 </h3>
             </v-col>
-            <v-col
-                cols="12"
-                xl="10"
-                lg="10"
-                md="8"
-                sm="8"
-                xs="12"
-                class="d-flex justify-center align-center"
-            >
+            <v-col cols="12" xl="10" lg="10" md="8" sm="8" xs="12" class="d-flex justify-center align-center">
                 <v-text-field solo></v-text-field>
-                <v-btn color="primary" class="ml-6 mb-7"
-                    ><v-icon>mdi-magnify</v-icon></v-btn
-                >
+                <v-btn color="primary" class="ml-6 mb-7">
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
             </v-col>
             <v-col cols="12">
                 <v-card>
-                    <v-data-table
-                        :headers="headers"
-                        :items="desserts"
-                        :items-per-page="5"
-                        class="elevation-1"
-                    ></v-data-table>
+                    <v-data-table :headers="headers" :items="desserts" :items-per-page="5" class="elevation-1">
+                    </v-data-table>
                 </v-card>
             </v-col>
         </v-row>
@@ -115,9 +101,11 @@ export default {
 .header {
     color: #26a69a;
 }
+
 .test {
     background: red;
 }
+
 @media only screen and (max-width: 600px) {
     .bck {
         background-color: white !important;

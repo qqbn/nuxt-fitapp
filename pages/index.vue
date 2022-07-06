@@ -29,11 +29,7 @@
                         </li>
                     </ul>
                     <hr class="my-3" />
-                    <a
-                        href="https://github.com/nuxt/nuxt.js"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <a href="https://github.com/qqbn/nuxt-fitapp" target="_blank" rel="noopener noreferrer">
                         App GitHub
                     </a>
                 </v-card-text>
