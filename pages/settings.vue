@@ -3,7 +3,7 @@
         <v-col cols="12" xl="6" lg="6" md="6" sm="10" xs="12" class="py-12">
             <v-card class="card">
                 <v-card-title class="headline">
-                    Right here, you can set your daily goals!
+                    Set your daily goals below:
                 </v-card-title>
                 <v-card-text class="
                         content
@@ -52,7 +52,11 @@ h4 {
     color: #26a69a;
 }
 
-.card {
-    /* background-color: transparent !important;  do przemyslenia*/
+
+@media(max-width: 480px) {
+
+    .v-card__title {
+        font-size: 18px !important;
+    }
 }
 </style>

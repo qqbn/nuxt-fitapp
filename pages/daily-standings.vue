@@ -16,16 +16,23 @@
                     align-center
                     pa-4
                 ">
-                <v-btn fab small color="primary" class="mr-4">
+                <v-btn fab small color="primary" class="mr-4" @click="test()">
                     <v-icon> mdi-arrow-left-drop-circle </v-icon>
                 </v-btn>
-                <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
-                    offset-y min-width="auto">
+                <v-dialog v-model="modal" :return-value.sync="date" width="290px" ref="dialog">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" fab v-bind="attrs" v-on="on" class="text-h6">{{ date.slice(-2) }}</v-btn>
                     </template>
-                    <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
-                </v-menu>
+                    <v-date-picker v-model="date" @input="menu2 = false">
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="modal = false">
+                            Cancel
+                        </v-btn>
+                        <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                            OK
+                        </v-btn>
+                    </v-date-picker>
+                </v-dialog>
                 <v-btn fab small color="primary" class="ml-4">
                     <v-icon> mdi-arrow-right-drop-circle </v-icon>
                 </v-btn>
@@ -45,7 +52,7 @@
                     Breakfest
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <v-card class="" v-for="(item, i) in 5" :key="i">
+                    <v-card class="elevation-0" v-for="(item, i) in 5" :key="i">
                         <v-card-title class="text-body-1 ma-0">
                             Ingredient name
                             <v-spacer></v-spacer>
@@ -57,16 +64,16 @@
                                 align-center
                                 ma-0
                             ">
-                            <p class="font-weight-bold">
+                            <p class="font-weight-bold ingredient-macro">
                                 30 <span class="primary--text">KCAL</span>
                             </p>
-                            <p class="font-weight-bold">
+                            <p class="font-weight-bold ingredient-macro">
                                 30g <span class="primary--text">FAT</span>
                             </p>
-                            <p class="font-weight-bold">
+                            <p class="font-weight-bold ingredient-macro">
                                 30g <span class="primary--text">CARBS</span>
                             </p>
-                            <p class="font-weight-bold">
+                            <p class="font-weight-bold ingredient-macro">
                                 30g <span class="primary--text">PROTEIN</span>
                             </p>
                         </v-card-text>
@@ -116,7 +123,7 @@ export default {
             menu2: false,
             date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
                 .toISOString()
-                .substr(0, 10),
+                .substring(0, 10),
             headers: [
                 { text: "Calories", value: "calories", sortable: false },
                 { text: "Fat (g)", value: "fat", sortable: false },
@@ -139,6 +146,9 @@ export default {
         testFunc() {
             alert("hi");
         },
+        test() {
+            console.log(this.date);
+        }
     },
 };
 </script>
@@ -188,5 +198,13 @@ export default {
 
 .macro-name {
     color: #26a69a;
+}
+
+
+@media only screen and (max-width: 480px) {
+    .ingredient-macro {
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }
 </style>

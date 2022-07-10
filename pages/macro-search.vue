@@ -7,15 +7,15 @@
                     macronutrients
                 </h3>
             </v-col>
-            <v-col cols="12" xl="10" lg="10" md="8" sm="8" xs="12" class="d-flex justify-center align-center">
-                <v-text-field solo></v-text-field>
-                <v-btn color="primary" class="ml-6 mb-7">
+            <v-col cols="12" xl="6" lg="6" md="8" sm="8" xs="10" class="d-flex justify-center align-center">
+                <v-text-field solo v-model="searchQuery"></v-text-field>
+                <v-btn color="primary" class="ml-6 mb-7" @click="macroSearch()">
                     <v-icon>mdi-magnify</v-icon>
                 </v-btn>
             </v-col>
-            <v-col cols="12">
-                <v-card>
-                    <v-data-table :headers="headers" :items="desserts" :items-per-page="5" class="elevation-1">
+            <v-col cols="12" class="pa-0">
+                <v-card cols="12" xl="10" lg="10" md="8" sm="8" xs="12">
+                    <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1">
                     </v-data-table>
                 </v-card>
             </v-col>
@@ -24,9 +24,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
+            searchQuery: '',
             bool: false,
             headers: [
                 {
@@ -102,8 +104,8 @@ export default {
     color: #26a69a;
 }
 
-.test {
-    background: red;
+.v-data-footer__select {
+    margin-right: 0;
 }
 
 @media only screen and (max-width: 600px) {

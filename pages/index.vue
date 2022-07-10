@@ -1,9 +1,6 @@
 <template>
     <v-row justify="center" align="center" class="pa-2">
-        <v-col cols="12" xl="10" lg="10" md="10" sm="10" xs="8" class="py-12">
-            <!-- <v-card class="logo py-4 d-flex justify-center">
-                <VuetifyLogo />
-            </v-card> -->
+        <v-col cols="12" xl="10" lg="10" md="10" sm="10" xs="12" class="py-12">
             <v-card>
                 <v-card-title class="headline">
                     Welcome to the FITapp
@@ -50,8 +47,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .headline {
     color: #26a69a;
+}
+
+
+@media(max-width: 540px) {
+    .start-row {
+        padding: 0;
+    }
 }
 </style>
