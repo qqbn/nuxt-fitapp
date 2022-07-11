@@ -5,13 +5,7 @@
                 <v-card-title class="headline">
                     Set your daily goals below:
                 </v-card-title>
-                <v-card-text class="
-                        content
-                        d-flex
-                        justify-space-around
-                        align-center
-                        flex-column
-                    ">
+                <v-card-text class="content d-flex justify-space-around align-center flex-column">
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Calories</h4>
                         <v-text-field solo type="number"></v-text-field>
