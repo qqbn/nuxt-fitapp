@@ -15,6 +15,12 @@
         <v-app-bar :clipped-left="clipped" fixed app class="nav-draw">
             <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer" />
             <v-toolbar-title v-text="title" class="nav-title" />
+            <v-spacer>
+            </v-spacer>
+            <p class="nav-progress d-flex justify-center align-center ma-0 primary--text">{{ dailyProgress }}/{{
+                    dailyLimit
+            }}
+            </p>
         </v-app-bar>
         <v-main>
             <Nuxt />
@@ -53,6 +59,8 @@ export default {
                 },
             ],
             title: "FITapp",
+            dailyLimit: 2400,
+            dailyProgress: 1200,
         };
     },
 };
@@ -64,5 +72,10 @@ export default {
     background-size: cover;
     background-position: fixed;
     background-repeat: no-repeat;
+}
+
+.nav-progress {
+    height: 100%;
+    font-size: 20px;
 }
 </style>

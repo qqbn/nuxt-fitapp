@@ -1,6 +1,6 @@
 <template>
     <div class="mb-4 date-picker d-flex justify-space-between align-center pa-4">
-        <v-btn fab small color="primary" class="mr-4" @click="test()">
+        <v-btn fab small color="primary" class="mr-4" @click="changeDay(-1)">
             <v-icon> mdi-arrow-left-drop-circle </v-icon>
         </v-btn>
         <v-dialog v-model="modal" :return-value.sync="date" width="290px" ref="dialog">
@@ -17,7 +17,7 @@
                 </v-btn>
             </v-date-picker>
         </v-dialog>
-        <v-btn fab small color="primary" class="ml-4">
+        <v-btn fab small color="primary" class="ml-4" @click="changeDay(1)">
             <v-icon> mdi-arrow-right-drop-circle </v-icon>
         </v-btn>
     </div>
@@ -32,6 +32,12 @@ export default {
             date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
                 .toISOString()
                 .substring(0, 10),
+        }
+    },
+    methods: {
+        changeDay(day) {
+            console.log(this.date);
+            // this.date = date.setDate(date + day);
         }
     }
 }
