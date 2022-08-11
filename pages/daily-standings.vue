@@ -2,11 +2,12 @@
     <v-container fluid fill-height class="d-flex justify-center align-start standings-main ma-0 pa-0">
         <StandingsHeader />
         <v-expansion-panels accordion>
-            <Meals v-for="meal in meals" :key="meal.idMeal" :meal="meal" />
+            <Meals v-for="meal in meals" :key="meal.idMeal" :meal="meal" @dialogOpen="setDialog($event)" />
         </v-expansion-panels>
         <div class="footer d-flex justify-space-around align-center pa-2">
             <DailyProgress v-for="progress in dailyProgress" :key="progress.idProgress" :progress="progress" />
         </div>
+        <AddMeal />
     </v-container>
 </template>
 
@@ -17,6 +18,7 @@ import StandingsHeader from '~/components/StandingsHeader.vue';
 export default {
     data() {
         return {
+            dialog: false,
             headers: [
                 { text: "Calories", value: "calories", sortable: false },
                 { text: "Fat (g)", value: "fat", sortable: false },
@@ -87,9 +89,9 @@ export default {
         },
         test() {
             console.log(this.date);
-        }
+        },
     },
-    components: { Meals, DailyProgress, StandingsHeader }
+    components: { Meals, DailyProgress, StandingsHeader, }
 };
 </script>
 
