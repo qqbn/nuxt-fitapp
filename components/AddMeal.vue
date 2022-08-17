@@ -14,55 +14,57 @@
                         </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
-                <v-list>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text">Meal name</v-list-item-title>
-                            <v-text-field solo type="text" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text"> Calories</v-list-item-title>
-                            <v-text-field solo type="number" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text">Fat</v-list-item-title>
-                            <v-text-field solo type="number" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
-                            <v-text-field solo type="number" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text">Protein</v-list-item-title>
-                            <v-text-field solo type="number" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title class="primary--text">Sugar</v-list-item-title>
-                            <v-text-field solo type="number" class="mt-4 shrink">
-                            </v-text-field>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
+                <v-row class="pa-0 ma-0" justify="center" fullscreen>
+                    <v-list max-width="600px" class="overflow-hidden">
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Meal name</v-list-item-title>
+                                <v-text-field solo type="text" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text"> Calories</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Fat</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Protein</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Sugar</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-4">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </v-row>
             </v-card>
         </v-dialog>
     </v-row>
