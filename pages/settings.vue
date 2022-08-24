@@ -8,29 +8,29 @@
                 <v-card-text class="content d-flex justify-space-around align-center flex-column">
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Calories</h4>
-                        <v-text-field solo type="number" v-model="dailyLimits.calories"></v-text-field>
+                        <v-text-field solo type="number" :value="calories" @input="setCalories"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Fat (g)</h4>
-                        <v-text-field solo type="number" v-model="dailyLimits.fat"></v-text-field>
+                        <v-text-field solo type="number" :value="fat" @input="setFat"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Sugar (g)</h4>
-                        <v-text-field solo type="number" v-model="dailyLimits.sugar"></v-text-field>
+                        <v-text-field solo type="number" :value="sugar" @input="setSugar"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Carbs (g)</h4>
-                        <v-text-field solo type="number" v-model="dailyLimits.carbs"></v-text-field>
+                        <v-text-field solo type="number" :value="carbs" @input="setCarbs"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Protein (g)</h4>
-                        <v-text-field solo type="number" v-model="dailyLimits.protein"></v-text-field>
+                        <v-text-field solo type="number" :value="protein" @input="setProtein"></v-text-field>
                     </v-col>
 
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer />
-                    <v-btn color="primary" @click="setSettings(dailyLimits)">SAVE</v-btn>
+                    <v-btn color="primary" @click="setSettings">SAVE</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -38,22 +38,52 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 export default {
     data() {
         return {
+            test: null,
         }
     },
     methods: {
-        ...mapMutations(['setSettings']),
+        setCalories(event) {
+            this.$store.commit('setCalories', event);
+        },
+        setFat(event) {
+            this.$store.commit('setFat', event);
+        },
+        setSugar(event) {
+            this.$store.commit('setSugar', event);
+        },
+        setCarbs(event) {
+            this.$store.commit('setCarbs', event);
+        },
+        setProtein(event) {
+            this.$store.commit('setProtein', event);
+        },
+        ...mapActions(['setSettings'])
+
     },
     computed: {
-        dailyLimits: {
-            get() {
-                return this.$store.state.dailyLimits;
-            }
+        calories() {
+            return this.$store.state.calories;
+        },
+        fat() {
+            return this.$store.state.fat;
+        },
+        sugar() {
+            return this.$store.state.sugar;
+        },
+        carbs() {
+            return this.$store.state.carbs;
+        },
+        protein() {
+            return this.$store.state.protein;
+        },
+        dailyLimits() {
+            return this.$store.state.dailyLimits;
         }
-    }
+    },
 };
 </script>
 
