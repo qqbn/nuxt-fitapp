@@ -8,23 +8,23 @@
                 <v-card-text class="content d-flex justify-space-around align-center flex-column">
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Calories</h4>
-                        <v-text-field solo type="number" :value="calories" @input="setCalories"></v-text-field>
+                        <v-text-field solo type="number" v-model="calories"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Fat (g)</h4>
-                        <v-text-field solo type="number" :value="fat" @input="setFat"></v-text-field>
+                        <v-text-field solo type="number" v-model="fat"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Sugar (g)</h4>
-                        <v-text-field solo type="number" :value="sugar" @input="setSugar"></v-text-field>
+                        <v-text-field solo type="number" v-model="sugar"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Carbs (g)</h4>
-                        <v-text-field solo type="number" :value="carbs" @input="setCarbs"></v-text-field>
+                        <v-text-field solo type="number" v-model="carbs"></v-text-field>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="6" sm="8" xs="8">
                         <h4 class="text-center">Protein (g)</h4>
-                        <v-text-field solo type="number" :value="protein" @input="setProtein"></v-text-field>
+                        <v-text-field solo type="number" v-model="protein"></v-text-field>
                     </v-col>
 
                 </v-card-text>
@@ -39,6 +39,7 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex';
+import { mapFields } from 'vuex-map-fields';
 export default {
     data() {
         return {
@@ -46,43 +47,17 @@ export default {
         }
     },
     methods: {
-        setCalories(event) {
-            this.$store.commit('setCalories', event);
-        },
-        setFat(event) {
-            this.$store.commit('setFat', event);
-        },
-        setSugar(event) {
-            this.$store.commit('setSugar', event);
-        },
-        setCarbs(event) {
-            this.$store.commit('setCarbs', event);
-        },
-        setProtein(event) {
-            this.$store.commit('setProtein', event);
-        },
         ...mapActions(['setSettings'])
 
     },
     computed: {
-        calories() {
-            return this.$store.state.calories;
-        },
-        fat() {
-            return this.$store.state.fat;
-        },
-        sugar() {
-            return this.$store.state.sugar;
-        },
-        carbs() {
-            return this.$store.state.carbs;
-        },
-        protein() {
-            return this.$store.state.protein;
-        },
-        dailyLimits() {
-            return this.$store.state.dailyLimits;
-        }
+        ...mapFields({
+            calories: 'dailyLimits.calories',
+            fat: 'dailyLimits.fat',
+            sugar: 'dailyLimits.sugar',
+            carbs: 'dailyLimits.carbs',
+            protein: 'dailyLimits.protein',
+        })
     },
 };
 </script>

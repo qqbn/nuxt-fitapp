@@ -4,7 +4,7 @@
             <v-list>
                 <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
                     <v-list-item-action>
-                        <v-icon color="primary">{{ item.icon }}</v-icon>
+                        <v-icon color="primary">{{  item.icon  }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title class="font" v-text="item.title" />
@@ -17,9 +17,8 @@
             <v-toolbar-title v-text="title" class="nav-title" />
             <v-spacer>
             </v-spacer>
-            <p class="nav-progress d-flex justify-center align-center ma-0 primary--text">{{ dailyProgress }}/{{
-                    dailyLimit
-            }}
+            <p class="nav-progress d-flex justify-center align-center ma-0 primary--text">{{  dailyProgress 
+                }}/{{  dailyCalories  }}
             </p>
         </v-app-bar>
         <v-main>
@@ -63,6 +62,11 @@ export default {
             dailyProgress: 1200,
         };
     },
+    computed: {
+        dailyCalories() {
+            return this.$store.state.dailyLimits.calories;
+        }
+    }
 };
 </script>
 
