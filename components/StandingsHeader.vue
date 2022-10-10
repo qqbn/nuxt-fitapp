@@ -7,7 +7,7 @@
             </v-progress-circular>
         </v-card>
         <p class="text d-flex justify-center align-center mt-2">
-            1200/2400 kcal
+            1200/{{dailyCalories}} kcal
         </p>
     </div>
 </template>
@@ -19,6 +19,11 @@ export default {
     data() {
         return {
             value: 50,
+        }
+    },
+    computed: {
+        dailyCalories() {
+            return this.$store.state.dailyLimits.calories;
         }
     }
 }

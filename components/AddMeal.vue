@@ -2,6 +2,7 @@
     <v-row justify="center">
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
+                <v-form>
                 <v-toolbar dark color="primary">
                     <v-btn icon dark @click="toggleDialog()">
                         <v-icon>mdi-close</v-icon>
@@ -24,47 +25,19 @@
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-item>
-                            <v-list-item-content>
+                        <div v-for="macro in macros" :key="macro.id">
+                            <v-list-item>
+                                <v-list-item-content>
                                 <v-list-item-title class="primary--text"> Calories</v-list-item-title>
                                 <v-text-field solo type="number" class="mt-4">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-item>
-                            <v-list-item-content>
-                                <v-list-item-title class="primary--text">Fat</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-4">
-                                </v-text-field>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <v-divider></v-divider>
-                        <v-list-item>
-                            <v-list-item-content>
-                                <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-4">
-                                </v-text-field>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <v-divider></v-divider>
-                        <v-list-item>
-                            <v-list-item-content>
-                                <v-list-item-title class="primary--text">Protein</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-4">
-                                </v-text-field>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <v-divider></v-divider>
-                        <v-list-item>
-                            <v-list-item-content>
-                                <v-list-item-title class="primary--text">Sugar</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-4">
-                                </v-text-field>
-                            </v-list-item-content>
-                        </v-list-item>
+                        </div>
                     </v-list>
                 </v-row>
+                </v-form>
             </v-card>
         </v-dialog>
     </v-row>
@@ -72,12 +45,40 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import MacroInput from './MacroInput.vue'
+import { ValidationProvider } from 'vee-validate'
+
+
 export default {
+    components: {
+        MacroInput,
+        ValidationProvider
+    },
     data() {
         return {
             notifications: false,
             sound: true,
             widgets: false,
+            macros: [
+                {
+                    name: 'Fat',
+                    id: 1,
+                    value: 0,
+                },
+                {
+                    name: 'Carbohydrates',
+                    id: 2,
+                },
+                {
+                    name: 'Protein',
+                    id: 3
+                },
+                {
+                    name: 'Sugar',
+                    id: 4,
+                }
+
+            ],
         }
 
     },
@@ -87,8 +88,9 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["toggleDialog"])
+        ...mapMutations(["toggleDialog"]),
     },
+
 }
 </script>
 

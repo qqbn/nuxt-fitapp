@@ -9,12 +9,15 @@ export const state = () => ({
     carbs: 0,
     protein: 0,
   },
+  addingMeal: 0
 });
 
 export const mutations = {
   updateField,
-  toggleDialog(state) {
+  toggleDialog(state, val) {
     state.addMealDialog = !state.addMealDialog;
+    state.addingMeal=val;
+    console.log(val);
   },
 
   pickDate(state, newDate) {

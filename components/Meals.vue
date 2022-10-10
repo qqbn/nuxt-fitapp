@@ -39,7 +39,7 @@
             </v-card>
             <div class="d-flex mt-4">
                 <v-spacer></v-spacer>
-                <v-btn fab small color="primary" @click="toggleDialog()">
+                <v-btn fab small color="primary" @click="toggleDialog(meal.idMeal)">
                     <v-icon>mdi-plus-circle-outline</v-icon>
                 </v-btn>
             </div>
