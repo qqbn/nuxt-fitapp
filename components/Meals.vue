@@ -6,7 +6,7 @@
             {{ mealCalories }}kcal
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-            <v-card class="elevation-0 meal-card" v-for="(item, i) in 5" :key="i">
+            <v-card class="elevation-0 meal-card">
                 <v-card-title class="text-body-1 ma-0">
                     Ingredient name
                     <v-spacer></v-spacer>

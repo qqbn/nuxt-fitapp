@@ -10,7 +10,7 @@
                     <v-toolbar-title>Adding new meal</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text @click="toggleDialog()">
+                        <v-btn dark text @click="toggleDialog()" type="submit">
                             Save
                         </v-btn>
                     </v-toolbar-items>
