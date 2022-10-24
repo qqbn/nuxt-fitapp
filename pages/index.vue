@@ -43,7 +43,17 @@
 
 <script>
 export default {
-    name: "IndexPage",
+    name: "IndexPage", 
+
+    methods:{
+            async asyncData(){
+                const test = await this.$axios.$get('http://localhost:5500/test');
+                return {test};
+            }        
+    },
+    mounted(){ 
+        console.log(this.asyncData());
+    } 
 };
 </script>
 
