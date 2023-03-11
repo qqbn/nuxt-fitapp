@@ -55,28 +55,28 @@ export default {
                 {
                     idProgress: 1,
                     progressName: 'Fat',
-                    progressLimit: 80,
+                    progressLimit: this.$store.state.dailyLimits.fat,
                     progress: 20,
                     progressColor: "#e8e9a1"
                 },
                 {
                     idProgress: 2,
                     progressName: 'Sugar',
-                    progressLimit: 80,
+                    progressLimit: this.$store.state.dailyLimits.sugar,
                     progress: 20,
                     progressColor: "#ff9a00"
                 },
                 {
                     idProgress: 3,
                     progressName: 'Carbs',
-                    progressLimit: 80,
+                    progressLimit: this.$store.state.dailyLimits.carbs,
                     progress: 20,
                     progressColor: "#ff165d"
                 },
                 {
                     idProgress: 4,
                     progressName: 'Protein',
-                    progressLimit: 80,
+                    progressLimit: this.$store.state.dailyLimits.protein,
                     progress: 20,
                     progressColor: "#03a9f4"
                 }
@@ -89,6 +89,11 @@ export default {
         },
         test() {
             console.log(this.date);
+        },
+    },
+    computed: {
+        dailyLimits() {
+            return this.$store.state.dailyLimits;
         },
     },
     components: { Meals, DailyProgress, StandingsHeader, }

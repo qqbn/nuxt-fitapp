@@ -42,17 +42,19 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
     name: "IndexPage", 
 
     methods:{
-            async asyncData(){
-                const test = await this.$axios.$get('http://localhost:5500/test');
-                return {test};
-            }        
+            async getSettings(){
+                const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>this.insertSettings(res));
+            },
+            
+            ...mapMutations(['insertSettings']),
     },
     mounted(){ 
-        console.log(this.asyncData());
+        this.getSettings();
     } 
 };
 </script>

@@ -17,7 +17,7 @@
             <v-toolbar-title v-text="title" class="nav-title" />
             <v-spacer>
             </v-spacer>
-            <p class="nav-progress d-flex justify-center align-center ma-0 primary--text">{{  dailyProgress 
+            <p class="nav-progress d-flex justify-center align-center ma-0 primary--text">{{  currentCalories 
                 }}/{{  dailyCalories  }}
             </p>
         </v-app-bar>
@@ -58,13 +58,14 @@ export default {
                 },
             ],
             title: "FITapp",
-            dailyLimit: 2400,
-            dailyProgress: 1200,
         };
     },
     computed: {
         dailyCalories() {
             return this.$store.state.dailyLimits.calories;
+        },
+        currentCalories() {
+            return this.$store.state.currentCalories;
         }
     }
 };
