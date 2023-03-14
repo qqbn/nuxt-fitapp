@@ -18,7 +18,6 @@ export const mutations = {
   toggleDialog(state, val) {
     state.addMealDialog = !state.addMealDialog;
     state.addingMeal=val;
-    console.log(val);
   },
 
   pickDate(state, newDate) {

@@ -2,7 +2,7 @@
     <v-row justify="center">
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
-                <v-form>
+                <v-form @submit="sendData">
                 <v-toolbar dark color="primary">
                     <v-btn icon dark @click="toggleDialog()">
                         <v-icon>mdi-close</v-icon>
@@ -10,7 +10,7 @@
                     <v-toolbar-title>Adding new meal</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text @click="toggleDialog()" type="submit">
+                        <v-btn dark text type="submit">
                             Save
                         </v-btn>
                     </v-toolbar-items>
@@ -20,21 +20,43 @@
                         <v-list-item>
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text">Meal name</v-list-item-title>
-                                <v-text-field solo type="text" class="mt-4">
+                                <v-text-field solo type="text" class="mt-2" v-model="meal.name">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
-                        <div v-for="macro in macros" :key="macro.id">
                             <v-list-item>
                                 <v-list-item-content>
-                                <v-list-item-title class="primary--text"> Calories</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-4">
+                                <v-list-item-title class="primary--text">Fat</v-list-item-title>
+                                <v-text-field solo type="number" v-model="meal.fat">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
-                        </div>
+                            <v-list-item>
+                                <v-list-item-content>
+                                <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
+                                <v-text-field solo type="number" v-model="meal.carbohydrate">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                            <v-list-item>
+                                <v-list-item-content>
+                                <v-list-item-title class="primary--text">Protein</v-list-item-title>
+                                <v-text-field solo type="number" v-model="meal.protein">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                            <v-list-item>
+                                <v-list-item-content>
+                                <v-list-item-title class="primary--text">Sugar</v-list-item-title>
+                                <v-text-field solo type="number" v-model="meal.sugar">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
                     </v-list>
                 </v-row>
                 </v-form>
@@ -59,26 +81,13 @@ export default {
             notifications: false,
             sound: true,
             widgets: false,
-            macros: [
-                {
-                    name: 'Fat',
-                    id: 1,
-                    value: 0,
-                },
-                {
-                    name: 'Carbohydrates',
-                    id: 2,
-                },
-                {
-                    name: 'Protein',
-                    id: 3
-                },
-                {
-                    name: 'Sugar',
-                    id: 4,
-                }
-
-            ],
+            meal:{
+                name: '',
+                fat: 0,
+                carbohydrate: 0,
+                protein: 0,
+                sugar: 0,
+            },
         }
 
     },
@@ -89,6 +98,14 @@ export default {
     },
     methods: {
         ...mapMutations(["toggleDialog"]),
+
+        async sendData(){
+        const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
+        meal: this.meal,
+        })
+        console.log(this.name);            
+            // this.toggleDialog();
+        }
     },
 
 }

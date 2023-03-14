@@ -2,8 +2,7 @@
     <div class="small-progress">
         <p class="macro-name">{{ progress.progressName }}</p>
         <p>{{ progress.progress }}/{{ progress.progressLimit }}g</p>
-        <v-progress-linear :color="progress.progressColor" height="10" value="10" width="25" striped>
-        </v-progress-linear>
+        <v-progress-linear :color="progress.progressColor" height="10" :value="dailyMacroProgress" width="25" striped></v-progress-linear>
     </div>
 </template>
 <script>
@@ -16,6 +15,13 @@ export default {
             progress: Number,
             progressColor: String,
 
+        }
+    },
+    computed:{
+        dailyMacroProgress(){
+            console.log(this.progress.progress);
+            console.log(this.progress.progressLimit);
+            return (this.progress.progress/this.progress.progressLimit)*100;
         }
     }
 }

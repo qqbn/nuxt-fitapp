@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
     name: "DefaultLayout",
     data() {
@@ -59,6 +60,16 @@ export default {
             ],
             title: "FITapp",
         };
+    },
+    methods:{
+            async getSettings(){
+                const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>this.insertSettings(res));
+            },
+            
+            ...mapMutations(['insertSettings']),
+    },
+    mounted(){
+        this.getSettings();
     },
     computed: {
         dailyCalories() {

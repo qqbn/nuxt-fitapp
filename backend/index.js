@@ -33,11 +33,20 @@ app.get('/settings', (req, res) => {
 
 app.post('/settings', (req,res)=>{
     const data = req.body;
-    console.log(data.settings);
     let sql = `UPDATE settings SET kcal=${data.settings.calories}, fat=${data.settings.fat}, sugar=${data.settings.sugar}, carbs=${data.settings.carbs}, protein=${data.settings.protein}`
     let queryRes = connection.query(sql, (err,results)=>{
         if(err) throw err;
         res.send(data)
+    })
+})
+
+app.post('/add-meal', (req,res)=>{
+    const data = req.body;
+    console.log(data);
+    let sql = `INSERT INTO meal (Meal_name) VALUES ('${data.meal.name}')`
+    let queryRes = connection.query(sql, (err,results) => {
+        if(err) throw err;
+        res.send(data);
     })
 })
 

@@ -18,23 +18,20 @@ export default {
     components: { StandingsDate },
     data() {
         return {
-            circleValue: 0,
         }
     },
     computed: {
         dailyCalories() {
-            return this.$store.state.dailyLimits.calories;
+            return this.$store.state.dailyLimits.calories || 0;
         },
         currentCalories(){
-            return this.$store.state.currentCalories;
+            return this.$store.state.currentCalories || 0;
+        },
+        circleValue(){
+            return Math.round((this.currentCalories/this.dailyCalories)*100) || 1;
         }
     },
     mounted(){
-        console.log(this.currentCalories);
-        console.log(this.dailyCalories);
-        this.circleValue=(this.currentCalories/this.dailyCalories)*100;
-        this.circleValue=Math.round(this.circleValue);
-        console.log(this.circleValue);
     },
 }
 </script>
