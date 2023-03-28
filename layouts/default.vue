@@ -63,10 +63,13 @@ export default {
     },
     methods:{
             async getSettings(){
-                const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>this.insertSettings(res));
+                const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>{
+                    this.insertSettings(res[0][0]);
+                    this.insertMeals(res[1]);
+                    });
             },
             
-            ...mapMutations(['insertSettings']),
+            ...mapMutations(['insertSettings','insertMeals']),
     },
     mounted(){
         this.getSettings();

@@ -2,7 +2,7 @@
     <v-container fluid fill-height class="d-flex justify-center align-start standings-main ma-0 pa-0">
         <StandingsHeader />
         <v-expansion-panels accordion>
-            <Meals v-for="meal in meals" :key="meal.idMeal" :meal="meal" @dialogOpen="setDialog($event)" />
+            <Meals v-for="meal in meals" :key="meal.id" :meal="meal" @dialogOpen="setDialog($event)" />
         </v-expansion-panels>
         <div class="footer d-flex justify-space-around align-center pa-2">
             <DailyProgress v-for="progress in dailyProgress" :key="progress.idProgress" :progress="progress" />
@@ -25,32 +25,7 @@ export default {
                 { text: "Carbs (g)", value: "carbs", sortable: false },
                 { text: "Protein (g)", value: "protein", sortable: false },
             ],
-            meals: [
-                {
-                    mealName: 'Breakfest',
-                    idMeal: 1,
-                },
-                {
-                    mealName: 'Second Breakfest',
-                    idMeal: 2,
-                },
-                {
-                    mealName: 'Lunch',
-                    idMeal: 3,
-                },
-                {
-                    mealName: 'Snack',
-                    idMeal: 4,
-                },
-                {
-                    mealName: 'Dinner',
-                    idMeal: 5,
-                },
-                {
-                    mealName: 'Training',
-                    idMeal: 6,
-                },
-            ],
+            meals: this.$store.state.meals,
             dailyProgress: [
                 {
                     idProgress: 1,
@@ -84,9 +59,6 @@ export default {
         };
     },
     methods: {
-        testFunc() {
-            alert("hi");
-        },
         test() {
             console.log(this.date);
         },

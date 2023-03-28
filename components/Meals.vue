@@ -1,7 +1,7 @@
 <template>
     <v-expansion-panel class="">
         <v-expansion-panel-header class="daily-meal-header text-h6 ma-0 primary--text">
-            <span class="black--text">{{ meal.mealName }}</span>
+            <span class="black--text">{{ meal.meal_name }}</span>
             <v-spacer></v-spacer>
             {{ mealCalories }}kcal
         </v-expansion-panel-header>
@@ -39,7 +39,7 @@
             </v-card>
             <div class="d-flex mt-4">
                 <v-spacer></v-spacer>
-                <v-btn fab small color="primary" @click="toggleDialog(meal.idMeal)">
+                <v-btn fab small color="primary" @click="toggleDialog(meal.id)">
                     <v-icon>mdi-plus-circle-outline</v-icon>
                 </v-btn>
             </div>

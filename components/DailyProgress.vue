@@ -19,8 +19,6 @@ export default {
     },
     computed:{
         dailyMacroProgress(){
-            console.log(this.progress.progress);
-            console.log(this.progress.progressLimit);
             return (this.progress.progress/this.progress.progressLimit)*100;
         }
     }

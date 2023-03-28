@@ -10,6 +10,7 @@ const connection = mysql.createConnection({
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     port: process.env.PORT,
+    multipleStatements: true,
 })
 
 const app = express()
@@ -24,10 +25,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/settings', (req, res) => {
-    let sql = "SELECT * FROM SETTINGS"
-    let queryRes = connection.query(sql, (err, results)=>{
+    let sql = "SELECT * FROM SETTINGS;SELECT * FROM MEAL"
+    let queryRes = connection.query(sql, [1,2], (err, results)=>{
         if(err) throw err;
-        res.send(results[0]); 
+        res.send(results); 
     })
 });
 

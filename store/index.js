@@ -9,6 +9,7 @@ export const state = () => ({
     carbs: 0,
     protein: 0,
   },
+  meals: [],
   addingMeal: 0,
   currentCalories: 1200,
 });
@@ -35,6 +36,10 @@ export const mutations = {
     state.dailyLimits.sugar=val.sugar;
     state.dailyLimits.carbs=val.carbs;
     state.dailyLimits.protein=val.protein;
+  },
+
+  insertMeals(state,val){
+    state.meals=val;
   },
 
   setCurrentCalories(state,val){
