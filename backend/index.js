@@ -32,9 +32,30 @@ app.get('/settings', (req, res) => {
     })
 });
 
+app.get('/mealslist', (req,res)=>{
+    // JOIN FOR REST OF MEALS
+    // INNER JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id
+    // LEFT JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id
+    let sql = "SELECT * FROM MEAL"
+    let queryRes = connection.query(sql, (err,results)=>{
+        if(err) throw err;
+        res.send(results);
+    })
+});
+
+app.get('/mealsdetail/:date', (req,res)=>{
+    // LEFT JOIN MEAL ON MEAL_DETAILS.meal_id=MEAL.id
+    const date = req.params['date'];
+    let sql = `SELECT * FROM MEAL_DETAILS WHERE added_date='${date}'`
+    let queryRes = connection.query(sql, (err,results) =>{
+        if(err) throw err;
+        res.send(results);
+    })
+})
+
 app.post('/settings', (req,res)=>{
     const data = req.body;
-    let sql = `UPDATE settings SET kcal=${data.settings.calories}, fat=${data.settings.fat}, sugar=${data.settings.sugar}, carbs=${data.settings.carbs}, protein=${data.settings.protein}`
+    let sql = `UPDATE SETTINGS SET kcal=${data.settings.calories}, fat=${data.settings.fat}, sugar=${data.settings.sugar}, carbs=${data.settings.carbs}, protein=${data.settings.protein}`
     let queryRes = connection.query(sql, (err,results)=>{
         if(err) throw err;
         res.send(data)
@@ -43,8 +64,7 @@ app.post('/settings', (req,res)=>{
 
 app.post('/add-meal', (req,res)=>{
     const data = req.body;
-    console.log(data);
-    let sql = `INSERT INTO meal (Meal_name) VALUES ('${data.meal.name}')`
+    let sql = `INSERT INTO meal_details (id, meal_id, meal_name, meal_calories, meal_fat, meal_sugar, meal_carbs, meal_protein, added_date) VALUES ('','${data.meal.meal_id}', '${data.meal.name}', '${data.meal.calories}', '${data.meal.fat}', '${data.meal.sugar}', '${data.meal.carbohydrate}', '${data.meal.protein}', '${data.meal.date}')`
     let queryRes = connection.query(sql, (err,results) => {
         if(err) throw err;
         res.send(data);

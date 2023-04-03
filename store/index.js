@@ -53,7 +53,6 @@ export const getters = {
 
 export const actions = {
   async setSettings({commit, state}) {
-    console.log(state.dailyLimits);
     const test = await this.$axios.$post('http://localhost:5500/settings',{
       settings: state.dailyLimits
     }).then((response)=>{

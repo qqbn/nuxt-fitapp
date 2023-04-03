@@ -25,7 +25,8 @@ export default {
                 { text: "Carbs (g)", value: "carbs", sortable: false },
                 { text: "Protein (g)", value: "protein", sortable: false },
             ],
-            meals: this.$store.state.meals,
+            // meals: this.$store.state.meals,
+            meals: null,
             dailyProgress: [
                 {
                     idProgress: 1,
@@ -59,14 +60,23 @@ export default {
         };
     },
     methods: {
-        test() {
-            console.log(this.date);
+        async getAllMeals(){
+            const settings = await this.$axios.$get('http://localhost:5500/mealslist').then((res)=>{
+                console.log(res);
+                this.meals=res;
+            }).then(()=>{
+                const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
+                    const mealsDetails = this.$axios.$get(`http://localhost:5500/mealsdetail/${date}`).then((res)=> console.log(res));
+            });
         },
     },
     computed: {
         dailyLimits() {
             return this.$store.state.dailyLimits;
         },
+    },
+    mounted(){
+        this.getAllMeals()
     },
     components: { Meals, DailyProgress, StandingsHeader, }
 };

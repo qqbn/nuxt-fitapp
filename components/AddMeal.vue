@@ -25,6 +25,14 @@
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="primary--text">Meal name</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-2" v-model="meal.calories">
+                                </v-text-field>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider></v-divider>
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Fat</v-list-item-title>
@@ -83,6 +91,7 @@ export default {
             widgets: false,
             meal:{
                 name: '',
+                calories: 0,
                 fat: 0,
                 carbohydrate: 0,
                 protein: 0,
@@ -100,10 +109,11 @@ export default {
         ...mapMutations(["toggleDialog"]),
 
         async sendData(){
-        const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
-        meal: this.meal,
-        })
-        console.log(this.name);            
+            this.meal['meal_id']=this.$store.state.addingMeal;
+            this.meal['date']=this.$store.state.todaysDate;
+            const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
+                meal: this.meal,
+            });           
             // this.toggleDialog();
         }
     },

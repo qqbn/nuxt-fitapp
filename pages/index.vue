@@ -44,6 +44,7 @@
 <script>
 export default {
     name: "IndexPage", 
+    props:['meals12']
 };
 </script>
 
