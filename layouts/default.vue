@@ -22,7 +22,7 @@
             </p>
         </v-app-bar>
         <v-main>
-            <Nuxt :meals12="meals" />
+            <Nuxt />
         </v-main>
     </v-app>
 </template>
@@ -36,7 +36,6 @@ export default {
             clipped: true,
             drawer: false,
             fixed: false,
-            meals:[],
             items: [
                 {
                     icon: "mdi-human-greeting-variant",
@@ -65,9 +64,7 @@ export default {
     methods:{
             async getSettings(){
                 const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>{
-                    this.insertSettings(res[0][0]);
-                    this.insertMeals(res[1]);
-                    this.meals=res[1];
+                    this.insertSettings(res[0]);
                     });
             },
             

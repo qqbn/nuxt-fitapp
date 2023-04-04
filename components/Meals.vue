@@ -1,14 +1,14 @@
 <template>
     <v-expansion-panel class="">
         <v-expansion-panel-header class="daily-meal-header text-h6 ma-0 primary--text">
-            <span class="black--text">{{ meal.meal_name }}</span>
+            <span class="black--text">{{ meal.mealName }}</span>
             <v-spacer></v-spacer>
             {{ mealCalories }}kcal
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-            <v-card class="elevation-0 meal-card">
+            <v-card class="elevation-0 meal-card" v-for="mealData in meal.data" :key="mealData.id">
                 <v-card-title class="text-body-1 ma-0">
-                    Ingredient name
+                    {{ mealData.meal_name }}
                     <v-spacer></v-spacer>
                     <v-icon color="primary" class="test ma-2 mt-4">mdi-delete</v-icon>
                 </v-card-title>
@@ -21,19 +21,19 @@
                                 pa-0
                             ">
                     <p class="font-weight-bold ingredient-macro">
-                        30 <span class="primary--text">KCAL</span>
+                        {{ mealData.meal_calories }} <span class="primary--text">KCAL</span>
                     </p>
                     <p class="font-weight-bold ingredient-macro">
-                        30g <span class="primary--text">FAT</span>
+                        {{ mealData.meal_fat }} <span class="primary--text">FAT</span>
                     </p>
                     <p class="font-weight-bold ingredient-macro">
-                        30g <span class="primary--text">CARBS</span>
+                        {{ mealData.meal_carbs }} <span class="primary--text">CARBS</span>
                     </p>
                     <p class="font-weight-bold ingredient-macro">
-                        30g <span class="primary--text">PROTEIN</span>
+                        {{ mealData.meal_protein }} <span class="primary--text">PROTEIN</span>
                     </p>
                     <p class="font-weight-bold ingredient-macro">
-                        30g <span class="primary--text">SUGAR</span>
+                        {{ mealData.meal_sugar }} <span class="primary--text">SUGAR</span>
                     </p>
                 </v-card-text>
             </v-card>
@@ -53,7 +53,8 @@ export default {
     props: {
         meal: {
             mealName: String,
-            idMeal: Number,
+            id: Number,
+            data: Array, 
         }
     },
     data() {

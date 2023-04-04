@@ -25,33 +25,33 @@ app.get('/', (req, res) => {
 })
 
 app.get('/settings', (req, res) => {
-    let sql = "SELECT * FROM SETTINGS;SELECT * FROM MEAL"
-    let queryRes = connection.query(sql, [1,2], (err, results)=>{
+    let sql = "SELECT * FROM SETTINGS"
+    let queryRes = connection.query(sql, (err, results)=>{
         if(err) throw err;
         res.send(results); 
     })
 });
 
-app.get('/mealslist', (req,res)=>{
-    // JOIN FOR REST OF MEALS
-    // INNER JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id
-    // LEFT JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id
-    let sql = "SELECT * FROM MEAL"
-    let queryRes = connection.query(sql, (err,results)=>{
+app.get('/mealslist/:date', (req,res)=>{
+    let returnArr = [];
+    const date = req.params['date'];
+    let sql = `SELECT * FROM MEAL; SELECT * FROM MEAL INNER JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id WHERE added_date='${date}'`
+    let queryRes = connection.query(sql, [1,2] ,(err,results)=>{
         if(err) throw err;
-        res.send(results);
+        for(i=0; i<results[0].length; i++){
+            const obj = {
+                mealName: results[0][i].meal_name,
+                id: results[0][i].id,
+                data: results[1].filter(id => id.meal_id === results[0][i].id),
+            }
+
+            returnArr.push(obj);
+        }
+
+        res.send(returnArr);
     })
 });
 
-app.get('/mealsdetail/:date', (req,res)=>{
-    // LEFT JOIN MEAL ON MEAL_DETAILS.meal_id=MEAL.id
-    const date = req.params['date'];
-    let sql = `SELECT * FROM MEAL_DETAILS WHERE added_date='${date}'`
-    let queryRes = connection.query(sql, (err,results) =>{
-        if(err) throw err;
-        res.send(results);
-    })
-})
 
 app.post('/settings', (req,res)=>{
     const data = req.body;

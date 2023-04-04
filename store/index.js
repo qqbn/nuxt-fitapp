@@ -38,9 +38,9 @@ export const mutations = {
     state.dailyLimits.protein=val.protein;
   },
 
-  insertMeals(state,val){
-    state.meals=val;
-  },
+  // insertMeals(state,val){
+  //   state.meals=val;
+  // },
 
   setCurrentCalories(state,val){
     state.currentCalories=val;

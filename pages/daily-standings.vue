@@ -19,13 +19,6 @@ export default {
     data() {
         return {
             dialog: false,
-            headers: [
-                { text: "Calories", value: "calories", sortable: false },
-                { text: "Fat (g)", value: "fat", sortable: false },
-                { text: "Carbs (g)", value: "carbs", sortable: false },
-                { text: "Protein (g)", value: "protein", sortable: false },
-            ],
-            // meals: this.$store.state.meals,
             meals: null,
             dailyProgress: [
                 {
@@ -61,13 +54,11 @@ export default {
     },
     methods: {
         async getAllMeals(){
-            const settings = await this.$axios.$get('http://localhost:5500/mealslist').then((res)=>{
+            const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
+            const settings = await this.$axios.$get(`http://localhost:5500/mealslist/${date}`).then((res)=>{
                 console.log(res);
                 this.meals=res;
-            }).then(()=>{
-                const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
-                    const mealsDetails = this.$axios.$get(`http://localhost:5500/mealsdetail/${date}`).then((res)=> console.log(res));
-            });
+            })
         },
     },
     computed: {
