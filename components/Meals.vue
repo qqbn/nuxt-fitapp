@@ -6,16 +6,18 @@
             {{ mealCalories }}kcal
         </v-expansion-panel-header>
         <v-expansion-panel-content>
+            <div v-if="meal.data.length>0">
             <v-card class="elevation-0 meal-card" v-for="mealData in meal.data" :key="mealData.id">
                 <v-card-title class="text-body-1 ma-0">
                     {{ mealData.meal_name }}
                     <v-spacer></v-spacer>
-                    <v-icon color="primary" class="test ma-2 mt-4">mdi-delete</v-icon>
+                    <v-icon color="primary" class="test ma-2 mt-4" @click="editMeal()">mdi-file-edit</v-icon>
+                    <v-icon color="primary" class="test ma-2 mt-4" @click="deleteMeal(meal.id, mealData.id)">mdi-delete</v-icon>
                 </v-card-title>
                 <v-card-text class="
                                 single-meal
                                 d-flex
-                                justify-space-around
+                                justify-space-between
                                 align-center
                                 ma-0
                                 pa-0
@@ -37,6 +39,10 @@
                     </p>
                 </v-card-text>
             </v-card>
+            </div>
+            <p class="text-xs-body-2" v-else>
+                There is no meals added today
+            </p>
             <div class="d-flex mt-4">
                 <v-spacer></v-spacer>
                 <v-btn fab small color="primary" @click="toggleDialog(meal.id)">
@@ -64,6 +70,16 @@ export default {
         };
     },
     methods: {
+        async deleteMeal(id, mealDetailId){
+            const request = await this.$axios.$post(`http://localhost:5500/deletemeal/${mealDetailId}`).then((res)=>{
+                if(res.affectedRows){
+                    this.$emit('deleteMeal', {id, mealDetailId});
+                }
+             });
+        },
+        editMeal(){
+            console.log('editing start');
+        },
         ...mapMutations(["toggleDialog"])
     },
 }
@@ -79,7 +95,7 @@ export default {
 
     .single-meal {
         padding: 0;
-
+        flex-wrap: wrap;
     }
 
     .meal-card {

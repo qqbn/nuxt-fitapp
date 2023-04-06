@@ -2,7 +2,7 @@
     <v-container fluid fill-height class="d-flex justify-center align-start standings-main ma-0 pa-0">
         <StandingsHeader />
         <v-expansion-panels accordion>
-            <Meals v-for="meal in meals" :key="meal.id" :meal="meal" @dialogOpen="setDialog($event)" />
+            <Meals v-for="meal in meals" :key="meal.id" :meal="meal" @dialogOpen="setDialog($event)" @deleteMeal="deleteMeal($event)"/>
         </v-expansion-panels>
         <div class="footer d-flex justify-space-around align-center pa-2">
             <DailyProgress v-for="progress in dailyProgress" :key="progress.idProgress" :progress="progress" />
@@ -60,6 +60,11 @@ export default {
                 this.meals=res;
             })
         },
+
+        deleteMeal(data){
+            const arr = this.meals[data.id-1].data;
+            this.meals[data.id-1].data = arr.filter(obj=> obj.id != data.mealId);
+        }
     },
     computed: {
         dailyLimits() {

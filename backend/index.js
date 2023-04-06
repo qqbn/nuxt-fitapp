@@ -71,6 +71,15 @@ app.post('/add-meal', (req,res)=>{
     })
 })
 
+app.post('/deletemeal/:id', (req,res)=>{
+    const id = req.params['id'];
+    let sql = `DELETE FROM meal_details WHERE id='${id}'`
+    let queryRes = connection.query(sql, (err,results) => {
+        if(err) throw err;
+        res.send(results);
+    })
+})
+
 app.listen(port, ()=> {
     console.log('Server started')
 })

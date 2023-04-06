@@ -71,6 +71,7 @@ export default {
             ...mapMutations(['insertSettings','insertMeals']),
     },
     mounted(){
+        console.log('default ruszył');
         this.getSettings();
     },
     computed: {
