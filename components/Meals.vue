@@ -76,6 +76,8 @@ export default {
                     this.$emit('deleteMeal', {id, mealDetailId});
                 }
              });
+
+            // this.$emit('deleteMeal', {id, mealDetailId});
         },
         editMeal(){
             console.log('editing start');

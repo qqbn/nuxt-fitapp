@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             dialog: false,
-            meals: null,
+            meals: [],
             dailyProgress: [
                 {
                     idProgress: 1,
@@ -62,8 +62,9 @@ export default {
         },
 
         deleteMeal(data){
-            const arr = this.meals[data.id-1].data;
-            this.meals[data.id-1].data = arr.filter(obj=> obj.id != data.mealId);
+            const mealsDetails = this.meals.find(obj => obj.id===data.id);
+            const index = this.meals.indexOf(mealsDetails);
+            this.meals[index].data = mealsDetails.data.filter(obj=> obj.id != data.mealDetailId);
         }
     },
     computed: {
