@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import Meals from '~/components/Meals.vue';
 import DailyProgress from '~/components/DailyProgress.vue';
 import StandingsHeader from '~/components/StandingsHeader.vue';
@@ -53,11 +54,17 @@ export default {
         };
     },
     methods: {
+        ...mapMutations(['setCurrentCalories']),
+
         async getAllMeals(){
             const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
             const settings = await this.$axios.$get(`http://localhost:5500/mealslist/${date}`).then((res)=>{
-                console.log(res);
-                this.meals=res;
+                this.meals=res[0];
+                this.dailyProgress[0].progress=res[1].fat;
+                this.dailyProgress[1].progress=res[1].sugar;
+                this.dailyProgress[2].progress=res[1].carbs;
+                this.dailyProgress[3].progress=res[1].protein;
+                this.setCurrentCalories(res[1].kcal);
             })
         },
 

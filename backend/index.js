@@ -24,16 +24,32 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 })
 
-app.get('/settings', (req, res) => {
-    let sql = "SELECT * FROM SETTINGS"
-    let queryRes = connection.query(sql, (err, results)=>{
+app.get('/settings/:date', (req, res) => {
+    const date = req.params['date'];
+    let sql = `SELECT * FROM SETTINGS;SELECT meal_calories FROM MEAL_DETAILS where added_date='${date}'`
+    let queryRes = connection.query(sql, [0,1], (err, results)=>{
         if(err) throw err;
-        res.send(results); 
+        const settingsObj = results[0][0];
+        let dailyCalories=0;
+
+        results[1].forEach(element=>{
+            dailyCalories += element.meal_calories
+        });
+
+        res.send([settingsObj, dailyCalories]); 
     })
 });
 
 app.get('/mealslist/:date', (req,res)=>{
     let returnArr = [];
+    let dailyStandings= {
+        kcal: 0,
+        fat: 0,
+        sugar: 0,
+        carbs: 0,
+        protein: 0,
+    };
+
     const date = req.params['date'];
     let sql = `SELECT * FROM MEAL; SELECT * FROM MEAL INNER JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id WHERE added_date='${date}'`
     let queryRes = connection.query(sql, [1,2] ,(err,results)=>{
@@ -48,7 +64,15 @@ app.get('/mealslist/:date', (req,res)=>{
             returnArr.push(obj);
         }
 
-        res.send(returnArr);
+        results[1].forEach(element => {
+            dailyStandings.kcal+=element.meal_calories;
+            dailyStandings.fat+=element.meal_fat;
+            dailyStandings.sugar+=element.meal_sugar;
+            dailyStandings.carbs+=element.meal_carbs;
+            dailyStandings.protein+=element.meal_protein;
+        });
+
+        res.send([returnArr, dailyStandings]);
     })
 });
 

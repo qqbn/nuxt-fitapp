@@ -62,16 +62,18 @@ export default {
         };
     },
     methods:{
+            ...mapMutations(['setCurrentCalories']),
             async getSettings(){
-                const settings = await this.$axios.$get('http://localhost:5500/settings').then((res)=>{
+                const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
+                const settings = await this.$axios.$get(`http://localhost:5500/settings/${date}`).then((res)=>{
                     this.insertSettings(res[0]);
+                    this.setCurrentCalories(res[1]);
                     });
             },
             
             ...mapMutations(['insertSettings','insertMeals']),
     },
     mounted(){
-        console.log('default ruszył');
         this.getSettings();
     },
     computed: {

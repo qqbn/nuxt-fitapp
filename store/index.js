@@ -11,7 +11,7 @@ export const state = () => ({
   },
   meals: [],
   addingMeal: 0,
-  currentCalories: 1200,
+  currentCalories: 0,
 });
 
 export const mutations = {

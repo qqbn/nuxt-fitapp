@@ -65,9 +65,14 @@ export default {
     },
     data() {
         return {
-            mealCalories: 500,
+            mealCalories: 0,
             dialog: false,
         };
+    },
+    beforeMount(){
+        this.meal.data.forEach(element => {
+            this.mealCalories += element.meal_calories;
+        });
     },
     methods: {
         async deleteMeal(id, mealDetailId){
