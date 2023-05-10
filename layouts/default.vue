@@ -30,6 +30,10 @@
 <script>
 import { mapMutations } from 'vuex';
 export default {
+    async middleware({store}){
+        await store.dispatch('getSettings');
+    },
+
     name: "DefaultLayout",
     data() {
         return {
@@ -62,24 +66,13 @@ export default {
         };
     },
     methods:{
-            ...mapMutations(['setCurrentCalories']),
-            async getSettings(){
-                const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
-                const settings = await this.$axios.$get(`http://localhost:5500/settings/${date}`).then((res)=>{
-                    this.insertSettings(res[0]);
-                    this.setCurrentCalories(res[1]);
-                    });
-            },
-            
-            ...mapMutations(['insertSettings','insertMeals']),
-    },
-    mounted(){
-        this.getSettings();
+        ...mapMutations(['insertSettings','insertMeals','setCurrentCalories']),
     },
     computed: {
         dailyCalories() {
             return this.$store.state.dailyLimits.calories;
         },
+
         currentCalories() {
             return this.$store.state.currentCalories;
         }

@@ -12,11 +12,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import Meals from '~/components/Meals.vue';
 import DailyProgress from '~/components/DailyProgress.vue';
 import StandingsHeader from '~/components/StandingsHeader.vue';
 export default {
+    components: { Meals, DailyProgress, StandingsHeader, },
     data() {
         return {
             dialog: false,
@@ -26,28 +27,28 @@ export default {
                     idProgress: 1,
                     progressName: 'Fat',
                     progressLimit: this.$store.state.dailyLimits.fat,
-                    progress: 20,
+                    progress: 0,
                     progressColor: "#e8e9a1"
                 },
                 {
                     idProgress: 2,
                     progressName: 'Sugar',
                     progressLimit: this.$store.state.dailyLimits.sugar,
-                    progress: 20,
+                    progress: 0,
                     progressColor: "#ff9a00"
                 },
                 {
                     idProgress: 3,
                     progressName: 'Carbs',
                     progressLimit: this.$store.state.dailyLimits.carbs,
-                    progress: 20,
+                    progress: 0,
                     progressColor: "#ff165d"
                 },
                 {
                     idProgress: 4,
                     progressName: 'Protein',
                     progressLimit: this.$store.state.dailyLimits.protein,
-                    progress: 20,
+                    progress: 0,
                     progressColor: "#03a9f4"
                 }
             ]
@@ -82,7 +83,6 @@ export default {
     mounted(){
         this.getAllMeals()
     },
-    components: { Meals, DailyProgress, StandingsHeader, }
 };
 </script>
 

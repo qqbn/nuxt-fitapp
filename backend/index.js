@@ -82,7 +82,7 @@ app.post('/settings', (req,res)=>{
     let sql = `UPDATE SETTINGS SET kcal=${data.settings.calories}, fat=${data.settings.fat}, sugar=${data.settings.sugar}, carbs=${data.settings.carbs}, protein=${data.settings.protein}`
     let queryRes = connection.query(sql, (err,results)=>{
         if(err) throw err;
-        res.send(data)
+        res.send(200)
     })
 })
 
@@ -91,7 +91,7 @@ app.post('/add-meal', (req,res)=>{
     let sql = `INSERT INTO meal_details (id, meal_id, meal_name, meal_calories, meal_fat, meal_sugar, meal_carbs, meal_protein, added_date) VALUES ('','${data.meal.meal_id}', '${data.meal.name}', '${data.meal.calories}', '${data.meal.fat}', '${data.meal.sugar}', '${data.meal.carbohydrate}', '${data.meal.protein}', '${data.meal.date}')`
     let queryRes = connection.query(sql, (err,results) => {
         if(err) throw err;
-        res.send(data);
+        res.send(200);
     })
 })
 
@@ -100,7 +100,17 @@ app.post('/deletemeal/:id', (req,res)=>{
     let sql = `DELETE FROM meal_details WHERE id='${id}'`
     let queryRes = connection.query(sql, (err,results) => {
         if(err) throw err;
-        res.send(results);
+        res.send(200);
+    })
+})
+
+app.post('/updatemeal/:id', (req,res)=>{
+    const id = req.params['id'];
+    const data = req.body;
+    let sql = `UPDATE meal_details SET meal_name='${data.meal.name}', meal_calories='${data.meal.calories}', meal_fat='${data.meal.fat}', meal_sugar='${data.meal.sugar}', meal_carbs='${data.meal.carbohydrate}', meal_protein='${data.meal.protein}' wHERE id='${id}'`
+    let queryRes = connection.query(sql, (err,results) => {
+        if(err) throw err;
+        res.send(200);
     })
 })
 

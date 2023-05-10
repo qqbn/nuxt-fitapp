@@ -7,7 +7,8 @@
                     <v-btn icon dark @click="toggleDialog()">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Adding new meal</v-toolbar-title>
+                    <v-toolbar-title v-show="!editingMealId">Adding new meal</v-toolbar-title>
+                    <v-toolbar-title v-show="editingMealId">Editing meal</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark text type="submit">
@@ -97,8 +98,30 @@ export default {
                 protein: 0,
                 sugar: 0,
             },
+            editingMealId: null,
         }
 
+    },
+    mounted(){
+        window.addEventListener('editDialog', (e)=>{
+            if(e.detail){
+                this.meal.name=e.detail.meal_name;
+                this.meal.calories=e.detail.meal_calories;
+                this.meal.fat=e.detail.meal_fat;
+                this.meal.carbohydrate=e.detail.meal_carbs;
+                this.meal.protein=e.detail.meal_protein;
+                this.meal.sugar=e.detail.meal_sugar;
+                this.editingMealId = e.detail.id;   
+            }else{
+                this.meal.name='';
+                this.meal.calories=0;
+                this.meal.fat=0;
+                this.meal.carbohydrate=0;
+                this.meal.protein=0;
+                this.meal.sugar=0;
+                this.editingMealId = null; 
+            }
+        })
     },
     computed: {
         dialog() {
@@ -109,11 +132,17 @@ export default {
         ...mapMutations(["toggleDialog"]),
 
         async sendData(){
-            this.meal['meal_id']=this.$store.state.addingMeal;
-            this.meal['date']=this.$store.state.todaysDate;
-            const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
-                meal: this.meal,
-            });           
+            if(!this.editingMealId){
+                this.meal['meal_id']=this.$store.state.addingMeal;
+                this.meal['date']=this.$store.state.todaysDate;
+                const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
+                    meal: this.meal,
+                }); 
+            }else{
+                const sendMeal = await this.$axios.$post(`http://localhost:5500/updatemeal/${this.editingMealId}`,{
+                    meal: this.meal,
+                })
+            }          
             // this.toggleDialog();
         }
     },

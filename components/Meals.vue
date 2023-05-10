@@ -11,7 +11,7 @@
                 <v-card-title class="text-body-1 ma-0">
                     {{ mealData.meal_name }}
                     <v-spacer></v-spacer>
-                    <v-icon color="primary" class="test ma-2 mt-4" @click="editMeal()">mdi-file-edit</v-icon>
+                    <v-icon color="primary" class="test ma-2 mt-4" @click="editMeal(meal.id, mealData)">mdi-file-edit</v-icon>
                     <v-icon color="primary" class="test ma-2 mt-4" @click="deleteMeal(meal.id, mealData.id)">mdi-delete</v-icon>
                 </v-card-title>
                 <v-card-text class="
@@ -45,11 +45,12 @@
             </p>
             <div class="d-flex mt-4">
                 <v-spacer></v-spacer>
-                <v-btn fab small color="primary" @click="toggleDialog(meal.id)">
+                <v-btn fab small color="primary" @click="addMeal(meal.id)">
                     <v-icon>mdi-plus-circle-outline</v-icon>
                 </v-btn>
             </div>
         </v-expansion-panel-content>
+        <v-alert v-model="alert" border="right" dense prominent type="success" dismissible class="alert success">{{ alertMsg }}</v-alert>
     </v-expansion-panel>
 </template>
 
@@ -67,6 +68,8 @@ export default {
         return {
             mealCalories: 0,
             dialog: false,
+            alert: false,
+            alertMsg: ''
         };
     },
     beforeMount(){
@@ -77,16 +80,32 @@ export default {
     methods: {
         async deleteMeal(id, mealDetailId){
             const request = await this.$axios.$post(`http://localhost:5500/deletemeal/${mealDetailId}`).then((res)=>{
-                if(res.affectedRows){
+                if(res){
                     this.$emit('deleteMeal', {id, mealDetailId});
+                    this.showAlert('Meal has been added!');
                 }
              });
+        },
+        editMeal(id, meal){
+            // this.$store.commit('toggleDialog', {id, meal});
+            this.toggleDialog(id);
+            const event = new CustomEvent('editDialog', {detail: meal});
+            window.dispatchEvent(event);
+        },
+        addMeal(id){
+            this.toggleDialog(id);
+            const event = new CustomEvent('editDialog', {detail: null});
+            window.dispatchEvent(event);
+        },
 
-            // this.$emit('deleteMeal', {id, mealDetailId});
+        showAlert(msg){
+            this.alert=true;
+            this.alertMsg=msg;
+            setTimeout(() => {
+                this.alert=false;
+            }, "2000"); 
         },
-        editMeal(){
-            console.log('editing start');
-        },
+
         ...mapMutations(["toggleDialog"])
     },
 }
@@ -94,6 +113,12 @@ export default {
 </script>
 
 <style scoped>
+.alert {
+    position: fixed !important;
+    top: 10%;
+    right: 1%;
+    width: auto;
+}
 @media only screen and (max-width: 480px) {
     .ingredient-macro {
         display: flex;

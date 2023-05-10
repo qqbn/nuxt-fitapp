@@ -9,7 +9,6 @@ export const state = () => ({
     carbs: 0,
     protein: 0,
   },
-  meals: [],
   addingMeal: 0,
   currentCalories: 0,
 });
@@ -55,4 +54,12 @@ export const actions = {
         
     });
   },
+
+  async getSettings({commit, state}){
+    const date = state.todaysDate.toISOString().substring(0, 10);
+    const settings = await this.$axios.$get(`http://localhost:5500/settings/${date}`).then((res)=>{
+        commit('insertSettings', res[0]);
+        commit('setCurrentCalories', res[1]);
+        });
+},
 };
