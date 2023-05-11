@@ -8,6 +8,7 @@
             <DailyProgress v-for="progress in dailyProgress" :key="progress.idProgress" :progress="progress" />
         </div>
         <AddMeal />
+        <SuccessAlert />
     </v-container>
 </template>
 
@@ -16,6 +17,7 @@ import { mapMutations, mapState } from 'vuex';
 import Meals from '~/components/Meals.vue';
 import DailyProgress from '~/components/DailyProgress.vue';
 import StandingsHeader from '~/components/StandingsHeader.vue';
+import SuccessAlert from '~/components/SuccessAlert.vue';
 export default {
     components: { Meals, DailyProgress, StandingsHeader, },
     data() {

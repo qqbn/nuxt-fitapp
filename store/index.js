@@ -1,6 +1,9 @@
 import { getField, updateField } from 'vuex-map-fields';
 export const state = () => ({
   addMealDialog: false,
+  successAlert: false,
+  errorAlert: false,
+  alertMsg: '',
   todaysDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
   dailyLimits: {
     calories: 0,
@@ -39,6 +42,22 @@ export const mutations = {
 
   setCurrentCalories(state,val){
     state.currentCalories=val;
+  },
+
+  showAlert(state,val){
+    state.successAlert=!state.successAlert;
+    state.alertMsg=val;
+    setTimeout(() => {
+        this.commit('hideAlert', 1);
+    }, "2000"); 
+  },
+
+  hideAlert(state,val){
+    if(val){
+      state.successAlert=false;
+    }else{
+      state.errorAlert=false;
+    }
   }
 };
 
@@ -61,5 +80,9 @@ export const actions = {
         commit('insertSettings', res[0]);
         commit('setCurrentCalories', res[1]);
         });
-},
+  },
+
+  // async showAlert({commit, state}){
+
+  // }
 };
