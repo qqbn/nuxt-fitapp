@@ -76,15 +76,8 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import MacroInput from './MacroInput.vue'
-import { ValidationProvider } from 'vee-validate'
-
 
 export default {
-    components: {
-        MacroInput,
-        ValidationProvider
-    },
     data() {
         return {
             notifications: false,
