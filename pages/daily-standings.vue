@@ -24,6 +24,8 @@ export default {
         return {
             dialog: false,
             meals: [],
+            controller: this.$axios.CancelToken.source(),
+            isPending: false,
             dailyProgress: [
                 {
                     idProgress: 1,
@@ -60,15 +62,19 @@ export default {
         ...mapMutations(['setCurrentCalories']),
 
         async getAllMeals(){
+            this.isPending=!this.isPending;
             const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
-            const settings = await this.$axios.$get(`http://localhost:5500/mealslist/${date}`).then((res)=>{
+            const settings = await this.$axios.$get(`http://localhost:5500/mealslist/${date}`,{cancelToken: this.controller.token}).then((res)=>{
+                this.isPending=!this.isPending;
                 this.meals=res[0];
                 this.dailyProgress[0].progress=res[1].fat;
                 this.dailyProgress[1].progress=res[1].sugar;
                 this.dailyProgress[2].progress=res[1].carbs;
                 this.dailyProgress[3].progress=res[1].protein;
                 this.setCurrentCalories(res[1].kcal);
-            })
+            }).catch((err)=>{
+                console.log(err);
+            });
         },
 
         deleteMeal(data){
@@ -81,6 +87,19 @@ export default {
         dailyLimits() {
             return this.$store.state.dailyLimits;
         },
+    },
+    computed: mapState(['todaysDate']),
+    watch: {
+        todaysDate(newVal, oldVal){
+            if(newVal != oldVal){
+                if(this.isPending){
+                    this.controller.cancel();
+                    this.isPending=!this.isPending;
+                }
+                this.controller=this.$axios.CancelToken.source();
+                this.getAllMeals();
+            }
+        }
     },
     mounted(){
         this.getAllMeals()
