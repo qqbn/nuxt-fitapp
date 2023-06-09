@@ -65,14 +65,8 @@ export default {
     },
     data() {
         return {
-            mealCalories: 0,
             dialog: false,
         };
-    },
-    beforeMount(){
-        this.meal.data.forEach(element => {
-            this.mealCalories += element.meal_calories;
-        });
     },
     methods: {
         async deleteMeal(id, mealDetailId, mealCalories){
@@ -96,6 +90,16 @@ export default {
 
         ...mapMutations(["toggleDialog", "showAlert"])
     },
+    computed:{
+        mealCalories(){
+            let mealCalories=0;
+            this.meal.data.forEach(element => {
+                mealCalories += element.meal_calories;
+            });
+
+            return mealCalories;
+        }
+    }
 }
 
 </script>
