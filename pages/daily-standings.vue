@@ -130,7 +130,7 @@ export default {
     watch: {
         todaysDate(newVal, oldVal){
             // newVal.toISOString().substring(0, 10) != oldVal.toISOString().substring(0, 10)
-            if(newVal.toISOString().substring(0, 10) != oldVal.toISOString().substring(0, 10)){
+            if(newVal != oldVal){
                 if(this.isPending){
                     this.controller.cancel();
                     this.isPending=!this.isPending;
