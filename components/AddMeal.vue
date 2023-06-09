@@ -2,7 +2,6 @@
     <v-row justify="center">
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
-                <v-form @submit="sendData">
                 <v-toolbar dark color="primary">
                     <v-btn icon dark @click="toggleDialog()">
                         <v-icon>mdi-close</v-icon>
@@ -11,7 +10,7 @@
                     <v-toolbar-title v-show="editingMealId">Editing meal</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text type="submit">
+                        <v-btn dark text @click="sendData">
                             Save
                         </v-btn>
                     </v-toolbar-items>
@@ -21,15 +20,15 @@
                         <v-list-item>
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text">Meal name</v-list-item-title>
-                                <v-text-field solo type="text" class="mt-2" v-model="meal.name">
+                                <v-text-field solo type="text" class="mt-2" v-model="meal.meal_name">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
                         <v-list-item>
                             <v-list-item-content>
-                                <v-list-item-title class="primary--text">Meal name</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-2" v-model="meal.calories">
+                                <v-list-item-title class="primary--text">Meal calories</v-list-item-title>
+                                <v-text-field solo type="number" class="mt-2" v-model="meal.meal_calories">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -37,7 +36,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Fat</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.fat">
+                                <v-text-field solo type="number" v-model="meal.meal_fat">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -45,7 +44,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.carbohydrate">
+                                <v-text-field solo type="number" v-model="meal.meal_carbs">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -53,7 +52,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Protein</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.protein">
+                                <v-text-field solo type="number" v-model="meal.meal_protein">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -61,14 +60,13 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Sugar</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.sugar">
+                                <v-text-field solo type="number" v-model="meal.meal_sugar">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
                         <v-divider></v-divider>
                     </v-list>
                 </v-row>
-                </v-form>
             </v-card>
         </v-dialog>
     </v-row>
@@ -84,34 +82,36 @@ export default {
             sound: true,
             widgets: false,
             meal:{
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbohydrate: 0,
-                protein: 0,
-                sugar: 0,
+                meal_name: '',
+                meal_calories: 0,
+                meal_fat: 0,
+                meal_carbs: 0,
+                meal_protein: 0,
+                meal_sugar: 0,
             },
             editingMealId: null,
+            editingMeal: null,
         }
 
     },
     mounted(){
         window.addEventListener('editDialog', (e)=>{
             if(e.detail){
-                this.meal.name=e.detail.meal_name;
-                this.meal.calories=e.detail.meal_calories;
-                this.meal.fat=e.detail.meal_fat;
-                this.meal.carbohydrate=e.detail.meal_carbs;
-                this.meal.protein=e.detail.meal_protein;
-                this.meal.sugar=e.detail.meal_sugar;
-                this.editingMealId = e.detail.id;   
+                this.meal.meal_name=e.detail.meal.meal_name;
+                this.meal.meal_calories=e.detail.meal.meal_calories;
+                this.meal.meal_fat=e.detail.meal.meal_fat;
+                this.meal.meal_carbs=e.detail.meal.meal_carbs;
+                this.meal.meal_protein=e.detail.meal.meal_protein;
+                this.meal.meal_sugar=e.detail.meal.meal_sugar;
+                this.editingMealId = e.detail.meal.id;
+                this.editingMeal = e.detail.id;   
             }else{
-                this.meal.name='';
-                this.meal.calories=0;
-                this.meal.fat=0;
-                this.meal.carbohydrate=0;
-                this.meal.protein=0;
-                this.meal.sugar=0;
+                this.meal.meal_name='';
+                this.meal.meal_calories=0;
+                this.meal.meal_fat=0;
+                this.meal.meal_carbs=0;
+                this.meal.meal_protein=0;
+                this.meal.meal_sugar=0;
                 this.editingMealId = null; 
             }
         })
@@ -122,7 +122,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["toggleDialog"]),
+        ...mapMutations(["toggleDialog","showAlert"]),
 
         async sendData(){
             if(!this.editingMealId){
@@ -130,10 +130,27 @@ export default {
                 this.meal['date']=this.$store.state.todaysDate;
                 const sendMeal = await this.$axios.$post('http://localhost:5500/add-meal',{
                     meal: this.meal,
-                }); 
+                }).then((res)=> {
+                    this.toggleDialog();
+                    if(res){
+                        this.showAlert('Meal has been added!');
+                        this.meal['id']=res[0];
+                        this.$emit('addMeal', this.meal);
+                    }
+                });
             }else{
-                const sendMeal = await this.$axios.$post(`http://localhost:5500/updatemeal/${this.editingMealId}`,{
+                const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
+                const sendMeal = await this.$axios.$post(`http://localhost:5500/edit-meal/${this.editingMealId}/${date}`,{
                     meal: this.meal,
+                }).then((res)=>{
+                    this.toggleDialog();
+                    if(res){
+                        this.showAlert('Meal has been edited!');
+                        this.meal['editingMeal']=this.editingMeal;
+                        this.meal['editingMealId']=this.editingMealId;
+                        this.$emit('editMeal', this.meal);
+                        this.$emit('stateRefresh', res);
+                    }
                 })
             }          
             // this.toggleDialog();

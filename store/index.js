@@ -44,6 +44,10 @@ export const mutations = {
     state.currentCalories=val;
   },
 
+  changeCurrentCalories(state, val){
+    state.currentCalories+=val;
+  },
+
   showAlert(state,val){
     state.successAlert=!state.successAlert;
     state.alertMsg=val;

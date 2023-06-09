@@ -88,10 +88,10 @@ app.post('/settings', (req,res)=>{
 
 app.post('/add-meal', (req,res)=>{
     const data = req.body;
-    let sql = `INSERT INTO meal_details (id, meal_id, meal_name, meal_calories, meal_fat, meal_sugar, meal_carbs, meal_protein, added_date) VALUES ('','${data.meal.meal_id}', '${data.meal.name}', '${data.meal.calories}', '${data.meal.fat}', '${data.meal.sugar}', '${data.meal.carbohydrate}', '${data.meal.protein}', '${data.meal.date}')`
+    let sql = `INSERT INTO meal_details (id, meal_id, meal_name, meal_calories, meal_fat, meal_sugar, meal_carbs, meal_protein, added_date) VALUES ('','${data.meal.meal_id}', '${data.meal.meal_name}', '${data.meal.meal_calories}', '${data.meal.meal_fat}', '${data.meal.meal_sugar}', '${data.meal.meal_carbs}', '${data.meal.meal_protein}', '${data.meal.date}')`
     let queryRes = connection.query(sql, (err,results) => {
         if(err) throw err;
-        res.send(200);
+        res.send([results.insertId]);
     })
 })
 
@@ -104,13 +104,28 @@ app.post('/deletemeal/:id', (req,res)=>{
     })
 })
 
-app.post('/updatemeal/:id', (req,res)=>{
+app.post('/edit-meal/:id/:date', (req,res)=>{
+    let dailyStandings= {
+        kcal: 0,
+        fat: 0,
+        sugar: 0,
+        carbs: 0,
+        protein: 0,
+    };
     const id = req.params['id'];
+    const date = req.params['date'];
     const data = req.body;
-    let sql = `UPDATE meal_details SET meal_name='${data.meal.name}', meal_calories='${data.meal.calories}', meal_fat='${data.meal.fat}', meal_sugar='${data.meal.sugar}', meal_carbs='${data.meal.carbohydrate}', meal_protein='${data.meal.protein}' wHERE id='${id}'`
-    let queryRes = connection.query(sql, (err,results) => {
+    let sql = `UPDATE meal_details SET meal_name='${data.meal.meal_name}', meal_calories='${data.meal.meal_calories}', meal_fat='${data.meal.meal_fat}', meal_sugar='${data.meal.meal_sugar}', meal_carbs='${data.meal.meal_carbs}', meal_protein='${data.meal.meal_protein}' wHERE id='${id}';SELECT * FROM MEAL INNER JOIN MEAL_DETAILS ON MEAL.id=MEAL_DETAILS.meal_id WHERE added_date='${date}'`
+    let queryRes = connection.query(sql, [0,1],(err,results) => {
         if(err) throw err;
-        res.send(200);
+        results[1].forEach(element => {
+            dailyStandings.kcal+=element.meal_calories;
+            dailyStandings.fat+=element.meal_fat;
+            dailyStandings.sugar+=element.meal_sugar;
+            dailyStandings.carbs+=element.meal_carbs;
+            dailyStandings.protein+=element.meal_protein;
+        });
+        res.send(dailyStandings);
     })
 })
 

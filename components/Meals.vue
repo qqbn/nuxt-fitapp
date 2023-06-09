@@ -12,7 +12,7 @@
                     {{ mealData.meal_name }}
                     <v-spacer></v-spacer>
                     <v-icon color="primary" class="test ma-2 mt-4" @click="editMeal(meal.id, mealData)">mdi-file-edit</v-icon>
-                    <v-icon color="primary" class="test ma-2 mt-4" @click="deleteMeal(meal.id, mealData.id)">mdi-delete</v-icon>
+                    <v-icon color="primary" class="test ma-2 mt-4" @click="deleteMeal(meal.id, mealData.id, mealData.meal_calories)">mdi-delete</v-icon>
                 </v-card-title>
                 <v-card-text class="
                                 single-meal
@@ -75,18 +75,17 @@ export default {
         });
     },
     methods: {
-        async deleteMeal(id, mealDetailId){
+        async deleteMeal(id, mealDetailId, mealCalories){
             const request = await this.$axios.$post(`http://localhost:5500/deletemeal/${mealDetailId}`).then((res)=>{
                 if(res){
-                    this.$emit('deleteMeal', {id, mealDetailId});
+                    this.$emit('deleteMeal', {id, mealDetailId, mealCalories});
                     this.showAlert('Meal has been deleted!');
                 }
              });
         },
         editMeal(id, meal){
-            // this.$store.commit('toggleDialog', {id, meal});
             this.toggleDialog(id);
-            const event = new CustomEvent('editDialog', {detail: meal});
+            const event = new CustomEvent('editDialog', {detail: {meal, id}});
             window.dispatchEvent(event);
         },
         addMeal(id){

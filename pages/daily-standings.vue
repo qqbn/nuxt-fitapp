@@ -7,7 +7,7 @@
         <div class="footer d-flex justify-space-around align-center pa-2">
             <DailyProgress v-for="progress in dailyProgress" :key="progress.idProgress" :progress="progress" />
         </div>
-        <AddMeal />
+        <AddMeal @addMeal="addMeal($event)" @editMeal="editMeal($event)" @stateRefresh="stateRefresh($event)" />
         <SuccessAlert />
     </v-container>
 </template>
@@ -59,7 +59,7 @@ export default {
         };
     },
     methods: {
-        ...mapMutations(['setCurrentCalories']),
+        ...mapMutations(['setCurrentCalories', 'changeCurrentCalories']),
 
         async getAllMeals(){
             this.isPending=!this.isPending;
@@ -67,20 +67,58 @@ export default {
             const settings = await this.$axios.$get(`http://localhost:5500/mealslist/${date}`,{cancelToken: this.controller.token}).then((res)=>{
                 this.isPending=!this.isPending;
                 this.meals=res[0];
-                this.dailyProgress[0].progress=res[1].fat;
-                this.dailyProgress[1].progress=res[1].sugar;
-                this.dailyProgress[2].progress=res[1].carbs;
-                this.dailyProgress[3].progress=res[1].protein;
-                this.setCurrentCalories(res[1].kcal);
+                this.stateRefresh(res[1]);
             }).catch((err)=>{
                 console.log(err);
             });
         },
 
+        addMeal(data){
+            this.meals.forEach(element => {
+                if(element.id === data.meal_id){
+                    element.data.push(data);
+                    this.dailyProgress[0].progress+=Number(data.meal_fat);
+                    this.dailyProgress[1].progress+=Number(data.meal_sugar);
+                    this.dailyProgress[2].progress+=Number(data.meal_carbs);
+                    this.dailyProgress[3].progress+=Number(data.meal_protein);
+                    this.changeCurrentCalories(Number(data.meal_calories));
+                }
+            });
+        },
+
+        editMeal(data){
+            const mealsDetails = this.meals.find(obj => obj.id===data.editingMeal);
+            const index = this.meals.indexOf(mealsDetails);
+            const element = mealsDetails.data.find(obj => obj.id == data.editingMealId);
+            const elementIndex = mealsDetails.data.indexOf(element);
+            this.meals[index].data[elementIndex].meal_calories=Number(data.meal_calories);
+            this.meals[index].data[elementIndex].meal_carbs=Number(data.meal_carbs);
+            this.meals[index].data[elementIndex].meal_fat=Number(data.meal_fat);
+            this.meals[index].data[elementIndex].meal_name=(data.meal_name);
+            this.meals[index].data[elementIndex].meal_protein=Number(data.meal_protein);
+            this.meals[index].data[elementIndex].meal_sugar=Number(data.meal_sugar);
+        },
+
         deleteMeal(data){
             const mealsDetails = this.meals.find(obj => obj.id===data.id);
             const index = this.meals.indexOf(mealsDetails);
+            const standings = mealsDetails.data.find(obj => obj.id == data.mealDetailId);
             this.meals[index].data = mealsDetails.data.filter(obj=> obj.id != data.mealDetailId);
+            if(standings){
+                this.dailyProgress[0].progress-=Number(standings.meal_fat);
+                this.dailyProgress[1].progress-=Number(standings.meal_sugar);
+                this.dailyProgress[2].progress-=Number(standings.meal_carbs);
+                this.dailyProgress[3].progress-=Number(standings.meal_protein);
+            }
+            this.changeCurrentCalories(-Number(data.mealCalories));
+        },
+
+        stateRefresh(data){
+            this.dailyProgress[0].progress=data.fat;
+            this.dailyProgress[1].progress=data.sugar;
+            this.dailyProgress[2].progress=data.carbs;
+            this.dailyProgress[3].progress=data.protein;
+            this.setCurrentCalories(data.kcal);
         }
     },
     computed: {
@@ -91,7 +129,8 @@ export default {
     computed: mapState(['todaysDate']),
     watch: {
         todaysDate(newVal, oldVal){
-            if(newVal != oldVal){
+            // newVal.toISOString().substring(0, 10) != oldVal.toISOString().substring(0, 10)
+            if(newVal.toISOString().substring(0, 10) != oldVal.toISOString().substring(0, 10)){
                 if(this.isPending){
                     this.controller.cancel();
                     this.isPending=!this.isPending;

@@ -27,5 +27,6 @@ computed:{
     top: 10%;
     right: 1%;
     width: auto;
+    z-index: 20;
 }
 </style>
