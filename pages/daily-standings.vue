@@ -77,11 +77,11 @@ export default {
             this.meals.forEach(element => {
                 if(element.id === data.meal_id){
                     element.data.push(data);
-                    this.dailyProgress[0].progress+=Number(data.meal_fat);
-                    this.dailyProgress[1].progress+=Number(data.meal_sugar);
-                    this.dailyProgress[2].progress+=Number(data.meal_carbs);
-                    this.dailyProgress[3].progress+=Number(data.meal_protein);
-                    this.changeCurrentCalories(Number(data.meal_calories));
+                    this.dailyProgress[0].progress+=data.meal_fat;
+                    this.dailyProgress[1].progress+=data.meal_sugar;
+                    this.dailyProgress[2].progress+=data.meal_carbs;
+                    this.dailyProgress[3].progress+=data.meal_protein;
+                    this.changeCurrentCalories(data.meal_calories);
                 }
             });
         },
@@ -91,12 +91,12 @@ export default {
             const index = this.meals.indexOf(mealsDetails);
             const element = mealsDetails.data.find(obj => obj.id == data.editingMealId);
             const elementIndex = mealsDetails.data.indexOf(element);
-            this.meals[index].data[elementIndex].meal_calories=Number(data.meal_calories);
-            this.meals[index].data[elementIndex].meal_carbs=Number(data.meal_carbs);
-            this.meals[index].data[elementIndex].meal_fat=Number(data.meal_fat);
-            this.meals[index].data[elementIndex].meal_name=(data.meal_name);
-            this.meals[index].data[elementIndex].meal_protein=Number(data.meal_protein);
-            this.meals[index].data[elementIndex].meal_sugar=Number(data.meal_sugar);
+            this.meals[index].data[elementIndex].meal_calories=data.meal_calories;
+            this.meals[index].data[elementIndex].meal_carbs=data.meal_carbs;
+            this.meals[index].data[elementIndex].meal_fat=data.meal_fat;
+            this.meals[index].data[elementIndex].meal_name=data.meal_name;
+            this.meals[index].data[elementIndex].meal_protein=data.meal_protein;
+            this.meals[index].data[elementIndex].meal_sugar=data.meal_sugar;
         },
 
         deleteMeal(data){
@@ -105,10 +105,10 @@ export default {
             const standings = mealsDetails.data.find(obj => obj.id == data.mealDetailId);
             this.meals[index].data = mealsDetails.data.filter(obj=> obj.id != data.mealDetailId);
             if(standings){
-                this.dailyProgress[0].progress-=Number(standings.meal_fat);
-                this.dailyProgress[1].progress-=Number(standings.meal_sugar);
-                this.dailyProgress[2].progress-=Number(standings.meal_carbs);
-                this.dailyProgress[3].progress-=Number(standings.meal_protein);
+                this.dailyProgress[0].progress-=standings.meal_fat;
+                this.dailyProgress[1].progress-=standings.meal_sugar;
+                this.dailyProgress[2].progress-=standings.meal_carbs;
+                this.dailyProgress[3].progress-=standings.meal_protein;
             }
             this.changeCurrentCalories(-Number(data.mealCalories));
         },

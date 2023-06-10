@@ -20,7 +20,7 @@
                         <v-list-item>
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text">Meal name</v-list-item-title>
-                                <v-text-field solo type="text" class="mt-2" v-model="meal.meal_name">
+                                <v-text-field solo type="text" class="mt-2" v-model="meal.meal_name" :rules="rules">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -28,7 +28,7 @@
                         <v-list-item>
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text">Meal calories</v-list-item-title>
-                                <v-text-field solo type="number" class="mt-2" v-model="meal.meal_calories">
+                                <v-text-field solo type="number" class="mt-2" v-model.number="meal.meal_calories">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -36,7 +36,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Fat</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.meal_fat">
+                                <v-text-field solo type="number" v-model.number="meal.meal_fat">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -44,7 +44,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Carbohydrates</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.meal_carbs">
+                                <v-text-field solo type="number" v-model.number="meal.meal_carbs">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -52,7 +52,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Protein</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.meal_protein">
+                                <v-text-field solo type="number" v-model.number="meal.meal_protein">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -60,7 +60,7 @@
                             <v-list-item>
                                 <v-list-item-content>
                                 <v-list-item-title class="primary--text">Sugar</v-list-item-title>
-                                <v-text-field solo type="number" v-model="meal.meal_sugar">
+                                <v-text-field solo type="number" v-model.number="meal.meal_sugar">
                                 </v-text-field>
                             </v-list-item-content>
                         </v-list-item>
@@ -91,6 +91,9 @@ export default {
             },
             editingMealId: null,
             editingMeal: null,
+            rules:[
+                value => !!value || 'Required.',
+            ]
         }
 
     },
