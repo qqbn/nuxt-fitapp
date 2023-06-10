@@ -10,7 +10,7 @@
                     <v-toolbar-title v-show="editingMealId">Editing meal</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text @click="sendData">
+                        <v-btn dark text @click="validateForm">
                             Save
                         </v-btn>
                     </v-toolbar-items>
@@ -93,6 +93,7 @@ export default {
             editingMeal: null,
             rules:[
                 value => !!value || 'Required.',
+                value => (value || '').length >= 3 || 'Min 3 characters',
             ]
         }
 
@@ -127,6 +128,12 @@ export default {
     methods: {
         ...mapMutations(["toggleDialog","showAlert"]),
 
+        validateForm(){
+            if(this.meal.meal_name && this.meal.meal_name.length>=3){
+                this.sendData();
+            }
+        },
+
         async sendData(){
             if(!this.editingMealId){
                 this.meal['meal_id']=this.$store.state.addingMeal;
@@ -156,7 +163,6 @@ export default {
                     }
                 })
             }          
-            // this.toggleDialog();
         }
     },
 
