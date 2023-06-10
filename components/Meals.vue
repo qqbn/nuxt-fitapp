@@ -75,6 +75,8 @@ export default {
                     this.$emit('deleteMeal', {id, mealDetailId, mealCalories});
                     this.showAlert('Meal has been deleted!');
                 }
+             }).catch((error)=>{
+                this.showErrorAlert('There is an error with deleting a meal!');
              });
         },
         editMeal(id, meal){
@@ -88,7 +90,7 @@ export default {
             window.dispatchEvent(event);
         },
 
-        ...mapMutations(["toggleDialog", "showAlert"])
+        ...mapMutations(["toggleDialog", "showAlert", "showErrorAlert"])
     },
     computed:{
         mealCalories(){

@@ -126,7 +126,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["toggleDialog","showAlert"]),
+        ...mapMutations(["toggleDialog","showAlert", "showErrorAlert"]),
 
         validateForm(){
             if(this.meal.meal_name && this.meal.meal_name.length>=3){
@@ -147,6 +147,9 @@ export default {
                         this.meal['id']=res[0];
                         this.$emit('addMeal', this.meal);
                     }
+                }).catch((error)=>{
+                    this.toggleDialog();
+                    this.showErrorAlert('There is an error with adding meal');
                 });
             }else{
                 const date = this.$store.state.todaysDate.toISOString().substring(0, 10);
@@ -161,6 +164,9 @@ export default {
                         this.$emit('editMeal', this.meal);
                         this.$emit('stateRefresh', res);
                     }
+                }).catch((error)=>{
+                    this.toggleDialog();
+                    this.showErrorAlert('There is an error with editing meal');
                 })
             }          
         }

@@ -21,7 +21,7 @@ computed:{
 }
 </script>
 
-<style scoped>
+<style>
 .alert {
     position: fixed !important;
     top: 10%;

@@ -56,6 +56,14 @@ export const mutations = {
     }, "2000"); 
   },
 
+  showErrorAlert(state,val){
+    state.errorAlert=!state.errorAlert;
+    state.alertMsg=val;
+    setTimeout(() => {
+        this.commit('hideAlert', 0);
+    }, "2000"); 
+  },
+
   hideAlert(state,val){
     if(val){
       state.successAlert=false;

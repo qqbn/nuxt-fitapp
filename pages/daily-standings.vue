@@ -9,6 +9,7 @@
         </div>
         <AddMeal @addMeal="addMeal($event)" @editMeal="editMeal($event)" @stateRefresh="stateRefresh($event)" />
         <SuccessAlert />
+        <ErrorAlert />
     </v-container>
 </template>
 
