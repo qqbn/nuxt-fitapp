@@ -14,8 +14,28 @@ export default {
         }
     },
     methods: {
-        macroSearch() {
-            alert('SEARCH!');
+       async macroSearch() {
+            const options = {
+            method: 'GET',
+            url: 'https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition',
+            params: {
+                query: this.searchQuery,
+            },
+            headers: {
+                'X-RapidAPI-Key': this.$config.apiKey,
+                'X-RapidAPI-Host': this.$config.apiHost, 
+            }
+            };
+
+           const request = await this.$axios.request(options).then((response) => {
+                console.log(response.data);
+                this.setItems(response.data);
+            }).catch((error) => {
+                console.error(error);
+            });
+        },
+        setItems(data) {
+            console.log(data);
         }
     }
 }
