@@ -2,8 +2,8 @@
     <v-container fluid fill-height class="bck ma-0">
         <v-row class="d-flex justify-center flex-column align-center my-12 px-4">
             <MacroSearchHeader />
-            <MacroSearchBar />
-            <MacroSearchTable />
+            <MacroSearchBar @addDish="addDish($event) "/>
+            <MacroSearchTable :dishes="dishes" />
         </v-row>
     </v-container>
 </template>
@@ -16,9 +16,20 @@ import MacroSearchHeader from '../components/MacroSearchHeader.vue';
 export default {
     data() {
         return {
+            dishes: [],
         };
     },
-    components: { MacroSearchBar, MacroSearchTable, MacroSearchHeader }
+    components: { MacroSearchBar, MacroSearchTable, MacroSearchHeader },
+    methods:{
+        addDish(data){
+            if(this.dishes.length===5){
+                this.dishes.shift();
+                this.dishes.push(data);
+            }else{
+                this.dishes.push(data);
+            }
+        }
+    }
 };
 </script>
 

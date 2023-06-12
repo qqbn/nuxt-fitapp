@@ -11,6 +11,7 @@ export default {
     data() {
         return {
             searchQuery: '',
+            searchedDish: {},
         }
     },
     methods: {
@@ -28,14 +29,26 @@ export default {
             };
 
            const request = await this.$axios.request(options).then((response) => {
-                console.log(response.data);
                 this.setItems(response.data);
             }).catch((error) => {
                 console.error(error);
             });
         },
         setItems(data) {
-            console.log(data);
+            const dish = data[0];
+            this.searchedDish.name=dish.name || '';
+            this.searchedDish.size=dish.serving_size_g || '';
+            this.searchedDish.calories = dish.calories || 0;
+            this.searchedDish.fat = dish.fat_total_g || 0;
+            this.searchedDish.carbs = dish.carbohydrates_total_g || 0;
+            this.searchedDish.protein = dish.protein_g || 0;
+            this.searchedDish.sugar = dish.sugar_g || 0;
+            this.searchedDish.sodium = dish.sodium_mg || 0;
+            this.searchedDish.cholesterol = dish.cholesterol_mg || 0;
+            this.searchedDish.satured = dish.fat_saturated_g || 0;
+            this.searchedDish.fiber = dish.fiber_g || 0;
+            this.$emit('addDish', this.searchedDish);
+            this.searchedDish={};
         }
     }
 }
