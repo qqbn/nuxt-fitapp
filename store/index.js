@@ -94,7 +94,4 @@ export const actions = {
         });
   },
 
-  // async showAlert({commit, state}){
-
-  // }
 };

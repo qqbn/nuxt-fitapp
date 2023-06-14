@@ -84,7 +84,6 @@ export default {
 #app {
     background-image: url("@/static/diet1.jpg") !important;
     background-size: cover;
-    background-position: fixed;
     background-repeat: no-repeat;
 }
 

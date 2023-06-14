@@ -5,6 +5,7 @@
             <MacroSearchBar @addDish="addDish($event) "/>
             <MacroSearchTable :dishes="dishes" />
         </v-row>
+        <ErrorAlert />
     </v-container>
 </template>
 
@@ -28,6 +29,13 @@ export default {
             }else{
                 this.dishes.push(data);
             }
+            const parsed = JSON.stringify(this.dishes);
+            localStorage.setItem('searchedDishes', parsed);
+        }
+    },
+    mounted(){
+        if(localStorage.getItem('searchedDishes')){
+            this.dishes=JSON.parse(localStorage.getItem('searchedDishes'));            
         }
     }
 };

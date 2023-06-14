@@ -14,7 +14,7 @@
                     <ul>
                         <li>
                             In daily standings tab, you can enter your meals and
-                            chcek how you can still afford
+                            check how you can still afford
                         </li>
                         <li>
                             In macro search tab, you can type name of dish and

@@ -7,6 +7,7 @@
     </v-col>
 </template>
 <script>
+import { mapMutations } from 'vuex';
 export default {
     data() {
         return {
@@ -32,6 +33,7 @@ export default {
                 this.setItems(response.data);
             }).catch((error) => {
                 console.error(error);
+                this.showErrorAlert(`We can't find data of this meal`);
             });
         },
         setItems(data) {
@@ -49,7 +51,9 @@ export default {
             this.searchedDish.fiber = dish.fiber_g || 0;
             this.$emit('addDish', this.searchedDish);
             this.searchedDish={};
-        }
+        },
+
+        ...mapMutations(['showErrorAlert'])
     }
 }
 </script>
